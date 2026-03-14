@@ -42,3 +42,6 @@
 - [x] 2026-03-14 16:36 Implement Phase 2 KYC/KYB Integration: orchestration service + Synctera-compatible mock adapter, verification persistence, analyst review queue, and applicant verification progress/resubmission flows
 
 - [x] 2026-03-14 16:56 Implement Phase 3 Account Management Module: approved-application account provisioning with idempotency, account APIs, lifecycle events/snapshots, account summary UI, and admin freeze/unfreeze/close controls
+
+- [x] 2026-03-14 17:25 Implement Phase 3 Payments & Transfers Module: ACH + internal transfer APIs, replay-safe reconciliation/events, payments dashboard UI, and Synctera-compatible mock payment adapter
+

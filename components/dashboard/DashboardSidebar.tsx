@@ -1,6 +1,7 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import {
   ActivitySquare,
+  ArrowLeftRight,
   Building2,
   ClipboardCheck,
   CreditCard,
@@ -16,6 +17,7 @@ const navItems = [
   { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { label: "Onboarding", href: "/onboarding", icon: ClipboardCheck },
   { label: "Accounts", href: "/dashboard/accounts", icon: Building2 },
+  { label: "Payments", href: "/dashboard/payments", icon: ArrowLeftRight },
   { label: "Cards", href: "/dashboard", icon: CreditCard },
   { label: "KYC / KYB Review", href: "/dashboard/kyc-review", icon: ShieldAlert, badge: 17 },
   { label: "Activity", href: "/dashboard", icon: ActivitySquare }
@@ -137,6 +139,3 @@ export function DashboardSidebar({ activeHref = "/dashboard", userEmail, signOut
     </aside>
   );
 }
-
-
-

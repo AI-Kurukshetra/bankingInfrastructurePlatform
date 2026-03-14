@@ -2,14 +2,7 @@ import { ArrowRight, ArrowUpRight, Building2, CreditCard, ShieldAlert, Wallet } 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import { Card } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -108,9 +101,9 @@ function liquidityColor(value: number, status: string) {
 
 export function DashboardOverview() {
   return (
-    <div className="space-y-5">
+    <div className="flex h-full flex-col gap-5">
       {/* Metric cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid shrink-0 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <MetricCard
           title="Total Deposits"
           value="$4.82M"
@@ -141,96 +134,94 @@ export function DashboardOverview() {
         />
       </div>
 
-      {/* Tabs */}
-      <Tabs defaultValue="transactions" className="space-y-4">
-        <div className="flex items-center justify-between gap-4">
-          <TabsList>
-            <TabsTrigger value="transactions">Transactions</TabsTrigger>
-            <TabsTrigger value="risk">
-              Risk Queue
-              <span className="inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-rose-100 px-1 text-[10px] font-bold text-rose-600 dark:bg-rose-900/40 dark:text-rose-400">
-                3
-              </span>
-            </TabsTrigger>
-            <TabsTrigger value="liquidity">Liquidity</TabsTrigger>
-          </TabsList>
-        </div>
+      {/* Single activity card with tabs inside */}
+      <Card className="flex min-h-0 flex-1 flex-col overflow-hidden border-slate-100/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <Tabs defaultValue="transactions" className="flex min-h-0 flex-1 flex-col gap-0">
 
-        {/* Transactions */}
-        <TabsContent value="transactions" className="mt-0">
-          <Card className="border-slate-100/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
-            <CardHeader className="flex flex-row items-center justify-between border-b border-slate-50 pb-4 dark:border-slate-800">
-              <div>
-                <CardTitle className="text-base">Recent Transactions</CardTitle>
-                <CardDescription className="mt-0.5">
-                  Real-time movement across ACH, internal and card rails.
-                </CardDescription>
-              </div>
+          {/* Card header: title + pill TabsList */}
+          <div className="flex shrink-0 items-center justify-between gap-4 border-b border-slate-100 px-5 py-4 dark:border-slate-800">
+            <div>
+              <p className="text-base font-semibold text-slate-900 dark:text-slate-100">Activity</p>
+              <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
+                Live data across transactions, risk alerts, and liquidity.
+              </p>
+            </div>
+            <TabsList className="shrink-0">
+              <TabsTrigger value="transactions">Transactions</TabsTrigger>
+              <TabsTrigger value="risk">
+                Risk Queue
+                <span className="inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-rose-100 px-1 text-[10px] font-bold text-rose-600 dark:bg-rose-900/40 dark:text-rose-400">
+                  3
+                </span>
+              </TabsTrigger>
+              <TabsTrigger value="liquidity">Liquidity</TabsTrigger>
+            </TabsList>
+          </div>
+
+          {/* Transactions */}
+          <TabsContent value="transactions" className="m-0 min-h-0 flex-1 overflow-auto">
+            <div className="flex items-center justify-between border-b border-slate-50 px-5 py-3 dark:border-slate-800">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Real-time movement across ACH, internal and card rails.
+              </p>
               <Button variant="ghost" size="sm" className="gap-1.5 text-blue-600 hover:text-blue-700 dark:text-blue-400">
                 View all
                 <ArrowRight className="h-3.5 w-3.5" />
               </Button>
-            </CardHeader>
-            <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-slate-50 hover:bg-transparent dark:border-slate-800">
-                    <TableHead className="pl-6 text-xs font-semibold uppercase tracking-wide text-slate-400">Transfer ID</TableHead>
-                    <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Customer</TableHead>
-                    <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Rails</TableHead>
-                    <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Amount</TableHead>
-                    <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Status</TableHead>
-                    <TableHead className="pr-6 text-right text-xs font-semibold uppercase tracking-wide text-slate-400">Time</TableHead>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow className="border-slate-50 hover:bg-transparent dark:border-slate-800">
+                  <TableHead className="pl-6 text-xs font-semibold uppercase tracking-wide text-slate-400">Transfer ID</TableHead>
+                  <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Customer</TableHead>
+                  <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Rails</TableHead>
+                  <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Amount</TableHead>
+                  <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Status</TableHead>
+                  <TableHead className="pr-6 text-right text-xs font-semibold uppercase tracking-wide text-slate-400">Time</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {transactions.map((tx) => (
+                  <TableRow
+                    key={tx.id}
+                    className="border-slate-50 transition-colors hover:bg-slate-50/80 dark:border-slate-800 dark:hover:bg-slate-800/50"
+                  >
+                    <TableCell className="pl-6 font-mono text-sm font-medium text-slate-800 dark:text-slate-200">
+                      {tx.id}
+                    </TableCell>
+                    <TableCell className="text-sm text-slate-700 dark:text-slate-300">{tx.customer}</TableCell>
+                    <TableCell>
+                      <span className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+                        {tx.rails}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                      {tx.amount}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className={statusBadgeTone(tx.status)}>
+                        {tx.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="pr-6 text-right text-xs text-slate-400">{tx.time}</TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {transactions.map((tx) => (
-                    <TableRow
-                      key={tx.id}
-                      className="border-slate-50 transition-colors hover:bg-slate-50/80 dark:border-slate-800 dark:hover:bg-slate-800/50"
-                    >
-                      <TableCell className="pl-6 font-mono text-sm font-medium text-slate-800 dark:text-slate-200">
-                        {tx.id}
-                      </TableCell>
-                      <TableCell className="text-sm text-slate-700 dark:text-slate-300">{tx.customer}</TableCell>
-                      <TableCell>
-                        <span className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
-                          {tx.rails}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-                        {tx.amount}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className={statusBadgeTone(tx.status)}>
-                          {tx.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="pr-6 text-right text-xs text-slate-400">{tx.time}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </TabsContent>
+                ))}
+              </TableBody>
+            </Table>
+          </TabsContent>
 
-        {/* Risk Queue */}
-        <TabsContent value="risk" className="mt-0">
-          <Card className="border-slate-100/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
-            <CardHeader className="flex flex-row items-center justify-between border-b border-slate-50 pb-4 dark:border-slate-800">
-              <div>
-                <CardTitle className="text-base">Analyst Risk Queue</CardTitle>
-                <CardDescription className="mt-0.5">
-                  Prioritized operational alerts for compliance and fraud review.
-                </CardDescription>
-              </div>
+          {/* Risk Queue */}
+          <TabsContent value="risk" className="m-0 min-h-0 flex-1 overflow-auto">
+            <div className="flex items-center justify-between border-b border-slate-50 px-5 py-3 dark:border-slate-800">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Prioritized operational alerts for compliance and fraud review.
+              </p>
               <Button variant="ghost" size="sm" className="gap-1.5 text-blue-600 hover:text-blue-700 dark:text-blue-400">
                 View all
                 <ArrowRight className="h-3.5 w-3.5" />
               </Button>
-            </CardHeader>
-            <CardContent className="space-y-2 p-4">
+            </div>
+            <div className="space-y-2 p-4">
               {alerts.map((alert) => (
                 <div
                   key={alert.title}
@@ -255,35 +246,28 @@ export function DashboardOverview() {
                   </div>
                 </div>
               ))}
-            </CardContent>
-          </Card>
-        </TabsContent>
+            </div>
+          </TabsContent>
 
-        {/* Liquidity */}
-        <TabsContent value="liquidity" className="mt-0">
-          <Card className="border-slate-100/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
-            <CardHeader className="flex flex-row items-center justify-between border-b border-slate-50 pb-4 dark:border-slate-800">
-              <div>
-                <CardTitle className="text-base">Liquidity Health</CardTitle>
-                <CardDescription className="mt-0.5">
-                  Reserve coverage and intraday utilization against configured limits.
-                </CardDescription>
-              </div>
+          {/* Liquidity */}
+          <TabsContent value="liquidity" className="m-0 min-h-0 flex-1 overflow-auto">
+            <div className="flex items-center justify-between border-b border-slate-50 px-5 py-3 dark:border-slate-800">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Reserve coverage and intraday utilization against configured limits.
+              </p>
               <Button variant="ghost" size="sm" className="gap-1.5 text-blue-600 hover:text-blue-700 dark:text-blue-400">
                 Review policy
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </Button>
-            </CardHeader>
-            <CardContent className="space-y-5 p-6">
+            </div>
+            <div className="space-y-5 p-6">
               {liquidityMetrics.map((metric) => (
                 <div key={metric.label} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{metric.label}</p>
-                    <div className="flex items-center gap-2">
-                      <span className={`text-sm font-bold ${metric.value >= 80 ? "text-emerald-600 dark:text-emerald-400" : metric.status === "warning" ? "text-amber-600 dark:text-amber-400" : "text-blue-600 dark:text-blue-400"}`}>
-                        {metric.value}%
-                      </span>
-                    </div>
+                    <span className={`text-sm font-bold ${metric.value >= 80 ? "text-emerald-600 dark:text-emerald-400" : metric.status === "warning" ? "text-amber-600 dark:text-amber-400" : "text-blue-600 dark:text-blue-400"}`}>
+                      {metric.value}%
+                    </span>
                   </div>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                     <div
@@ -293,10 +277,11 @@ export function DashboardOverview() {
                   </div>
                 </div>
               ))}
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+            </div>
+          </TabsContent>
+
+        </Tabs>
+      </Card>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -92,6 +92,7 @@ export function DashboardCommandPalette() {
           <CommandGroup heading="Navigation">
             <CommandItem onSelect={() => goTo("/dashboard")}>Dashboard Overview</CommandItem>
             <CommandItem onSelect={() => goTo("/dashboard/accounts")}>Accounts</CommandItem>
+            <CommandItem onSelect={() => goTo("/dashboard/payments")}>Payments</CommandItem>
             <CommandItem onSelect={() => goTo("/dashboard/kyc-review")}>KYC / KYB Review</CommandItem>
             <CommandItem onSelect={() => goTo("/account/reset-password")}>Account Security</CommandItem>
             <CommandItem onSelect={() => goTo("/forgot-password")}>Forgot Password</CommandItem>
@@ -108,4 +109,3 @@ export function DashboardCommandPalette() {
     </>
   );
 }
-

@@ -1,4 +1,4 @@
-﻿# FinStack MVP Task Plan
+# FinStack MVP Task Plan
 
 ## Phase 1: Foundation
 
@@ -66,13 +66,13 @@
 - [x] Integration: Connect Synctera account creation and account detail endpoints to internal services
 
 ### 8. Payments & Transfers Module
-- [ ] Backend: Implement ACH transfer creation with validation, idempotency keys, and status tracking
-- [ ] Backend: Implement internal transfer workflow between platform accounts
-- [ ] Backend: Create transfer reconciliation logic for pending, processing, settled, returned, and failed states
-- [ ] Frontend: Build transfer initiation forms for ACH and internal transfers
-- [ ] Frontend: Build payment status, history, and error-state views for customers and admins
-- [ ] Integration: Connect Synctera payment APIs and normalize provider status updates
-- [ ] Integration: Add retry-safe handling for duplicate submission and webhook replay scenarios
+- [x] Backend: Implement ACH transfer creation with validation, idempotency keys, and status tracking
+- [x] Backend: Implement internal transfer workflow between platform accounts
+- [x] Backend: Create transfer reconciliation logic for pending, processing, settled, returned, and failed states
+- [x] Frontend: Build transfer initiation forms for ACH and internal transfers
+- [x] Frontend: Build payment status, history, and error-state views for customers and admins
+- [x] Integration: Connect Synctera payment APIs and normalize provider status updates
+- [x] Integration: Add retry-safe handling for duplicate submission and webhook replay scenarios
 
 ### 9. Cards Module
 - [ ] Backend: Implement virtual debit card issuance workflow for approved accounts
@@ -164,6 +164,7 @@
 - [ ] Build mock/fallback flows for any Synctera sandbox gaps without changing public API boundaries
 - [ ] Create operator cheat sheet for manual retries, webhook replay, and exception handling during the demo
 - [ ] Capture screenshots or backup walkthrough assets in case live integrations degrade during judging
+
 
 
 

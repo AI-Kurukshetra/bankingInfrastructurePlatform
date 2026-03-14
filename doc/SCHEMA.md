@@ -6,6 +6,7 @@
 |------|-------------|
 | `20260314124500_initial_auth_and_core.sql` | Core tables, enums, RLS, auth trigger |
 | `20260314210000_extended_schema.sql` | Onboarding, transactions, webhooks, API keys, documents, audit log enhancements |
+| `20260315010000_payments_and_transfers_module.sql` | ACH/internal transfer rails, reconciliation events, idempotency, and return/failure status support |
 
 ---
 
@@ -15,7 +16,7 @@
 |------|--------|
 | `app_role` | `customer`, `analyst`, `admin`, `developer` |
 | `account_status` | `active`, `frozen`, `closed` |
-| `transfer_status` | `pending`, `processing`, `settled`, `failed` |
+| `transfer_status` | `pending`, `processing`, `settled`, `returned`, `failed` |
 | `card_status` | `active`, `frozen`, `terminated` |
 | `alert_severity` | `low`, `medium`, `high` |
 | `case_status` | `open`, `investigating`, `resolved`, `closed` |
@@ -131,7 +132,7 @@ A virtual or physical debit card linked to a bank account.
 ---
 
 ### `transfers`
-An ACH or internal money movement between two accounts.
+An ACH payout or internal money movement between accounts, with idempotent submission and reconciliation tracking.
 
 | Column | Type | Notes |
 |--------|------|-------|
@@ -140,8 +141,21 @@ An ACH or internal money movement between two accounts.
 | `destination_account_id` | `uuid` | References `bank_accounts.id` |
 | `amount` | `numeric(14,2)` | |
 | `currency` | `text` | Default `USD` |
+| `rail` | `transfer_rail` | `ach` or `internal` |
 | `status` | `transfer_status` | Default `pending` |
+| `idempotency_key` | `text` | Unique per `created_by` when set |
+| `provider` | `text` | Provider/adapter identifier |
+| `provider_transfer_id` | `text` | External dedup key |
+| `provider_status` | `text` | Provider-native status mirror |
 | `memo` | `text` | Optional |
+| `destination_external_name` | `text` | ACH counterparty display name |
+| `destination_external_routing` | `text` | ACH routing number |
+| `destination_external_account_mask` | `text` | Masked external account suffix |
+| `failure_reason` | `text` | Set when status -> `failed` |
+| `return_reason` | `text` | Set when status -> `returned` |
+| `metadata` | `jsonb` | Provider/reconciliation payloads |
+| `ledger_applied_at` | `timestamptz` | Settlement posted to ledger |
+| `reversal_applied_at` | `timestamptz` | Return reversal posted to ledger |
 | `created_by` | `uuid` | References `auth.users.id` |
 | `created_at` | `timestamptz` | |
 | `updated_at` | `timestamptz` | Auto-updated |
@@ -434,3 +448,26 @@ Key fields:
 - Customers can read lifecycle events/snapshots only for owned accounts.
 - Analyst/Admin can read all and write provisioning, lifecycle events, and snapshots.
 - Provisioning requests are readable by requester and staff.
+
+---
+
+## Payments & Transfers Extension (20260315010000_payments_and_transfers_module.sql)
+
+### New enum
+- `transfer_rail`: `ach`, `internal`
+
+### transfers additions
+- Adds `rail`, `idempotency_key`, provider refs/status, ACH counterparty fields, failure/return reasons, reconciliation metadata, and ledger/reversal timestamps.
+
+### New table: `transfer_events`
+Replay-safe transfer status timeline used for manual reconciliation and provider webhook deduplication.
+
+Key fields:
+- `transfer_id`, `event_type`, `previous_status`, `next_status`
+- `source`, `provider_event_id`, `actor_user_id`, `payload`, `created_at`
+
+### RLS summary
+- Customers can read transfer events for transfers they created or for transfers touching their accessible accounts.
+- Analyst/Admin can read all transfer events.
+- Insert is restricted to staff or service-role backed server workflows.
+

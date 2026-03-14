@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { ShieldCheck } from "lucide-react";
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { DashboardOverview } from "@/components/dashboard/DashboardOverview";
-import { SessionGuard } from "@/components/auth/SessionGuard";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export default async function DashboardPage() {
@@ -22,9 +21,7 @@ export default async function DashboardPage() {
   const displayName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
   return (
-    <>
-      <SessionGuard />
-      <DashboardShell
+    <DashboardShell
         activeHref="/dashboard"
         userEmail={user.email}
         signOut={signOut}
@@ -40,6 +37,5 @@ export default async function DashboardPage() {
       >
         <DashboardOverview />
       </DashboardShell>
-    </>
   );
 }

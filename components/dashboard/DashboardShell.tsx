@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
 import { DashboardCommandPalette } from "@/components/dashboard/DashboardCommandPalette";
+import { SessionGuard } from "@/components/auth/SessionGuard";
 
 type DashboardShellProps = {
   /** Sidebar active nav item href */
@@ -33,6 +34,7 @@ export function DashboardShell({
 }: DashboardShellProps) {
   return (
     <div className="flex h-dvh w-full overflow-hidden bg-slate-50 dark:bg-slate-950">
+      <SessionGuard />
       {/* Sidebar */}
       <DashboardSidebar
         activeHref={activeHref}
@@ -63,7 +65,7 @@ export function DashboardShell({
         </header>
 
         {/* Scrollable content */}
-        <main className="flex-1 overflow-y-auto px-6 py-6">
+        <main className="flex min-h-0 flex-1 flex-col overflow-y-auto px-6 py-6">
           {children}
         </main>
       </div>
