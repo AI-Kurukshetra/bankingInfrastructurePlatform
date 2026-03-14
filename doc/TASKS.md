@@ -36,3 +36,5 @@
 [x] 2026-03-14 16:05 Replace landing page with a completely new fintech SaaS narrative and component structure
 
 [x] 2026-03-14 16:18 Remove login/signup email prefill behavior from auth form
+
+- [x] 2026-03-14 16:24 Implement Phase 2 User Onboarding Module: draft/save/submit/status APIs, consumer+business wizards, draft resume/timeline UX, and Supabase document upload integration with storage policies

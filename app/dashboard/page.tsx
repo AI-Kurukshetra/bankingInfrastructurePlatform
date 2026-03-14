@@ -3,6 +3,7 @@ import { ShieldCheck } from "lucide-react";
 import { DashboardOverview } from "@/components/dashboard/DashboardOverview";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
 import { DashboardCommandPalette } from "@/components/dashboard/DashboardCommandPalette";
+import { SessionGuard } from "@/components/auth/SessionGuard";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export default async function DashboardPage() {
@@ -27,6 +28,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex h-dvh w-full overflow-hidden bg-slate-50 dark:bg-slate-950">
+      <SessionGuard />
       {/* Fixed sidebar */}
       <DashboardSidebar
         activeHref="/dashboard"

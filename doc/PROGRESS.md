@@ -36,3 +36,5 @@
 [2026-03-14 16:05] codex - Replaced the entire root landing page with a new fintech SaaS design and original content, added new section components, removed legacy landing components, and validated with typecheck/lint/build
 
 [2026-03-14 16:18] codex - Updated LoginCard to stop preloading remembered email into auth forms and validated with typecheck/lint
+
+[2026-03-14 16:24] codex - Implemented Phase 2 User Onboarding Module with onboarding APIs, typed consumer/business form models, /onboarding workspace UI (wizards, draft resume, validation, timeline), document metadata route, storage-backed upload flow, and migration for applicant update + storage access policies

@@ -19,12 +19,12 @@
 - [ ] Set up storage buckets for identity and business verification documents
 
 ### 3. Database Schema
-- [ ] Design MVP entity map for users, organizations, onboarding applications, accounts, cards, transfers, transactions, alerts, cases, webhooks, API keys, audit logs, and documents
-- [ ] Create initial Supabase migrations for core tables and enums
-- [ ] Add row-level security policies for customer, analyst, admin, and developer roles
-- [ ] Define audit log schema with actor, action, request ID, and before/after state fields
-- [ ] Define webhook event schema with idempotency, processing status, retry count, and error fields
-- [ ] Document schema, relationships, and RLS rules in `/doc/SCHEMA.md`
+- [x] Design MVP entity map for users, organizations, onboarding applications, accounts, cards, transfers, transactions, alerts, cases, webhooks, API keys, audit logs, and documents
+- [x] Create initial Supabase migrations for core tables and enums
+- [x] Add row-level security policies for customer, analyst, admin, and developer roles
+- [x] Define audit log schema with actor, action, request ID, and before/after state fields
+- [x] Define webhook event schema with idempotency, processing status, retry count, and error fields
+- [x] Document schema, relationships, and RLS rules in `/doc/SCHEMA.md`
 
 ### 4. Authentication & Authorization
 - [ ] Backend: Configure Supabase Auth for customer and admin login flows
@@ -38,13 +38,13 @@
 ## Phase 2: Onboarding And Compliance
 
 ### 5. User Onboarding Module
-- [ ] Backend: Create onboarding application APIs for draft creation, save progress, submit, and status lookup
-- [ ] Backend: Add applicant profile models for consumer and business onboarding
-- [ ] Backend: Implement document metadata and storage reference handling
-- [ ] Frontend: Build consumer onboarding wizard for profile, contact, consent, identity, and document steps
-- [ ] Frontend: Build business onboarding wizard for business profile, tax info, owners, and document steps
-- [ ] Frontend: Add draft resume, validation errors, loading states, and status timeline views
-- [ ] Integration: Wire document upload flow to Supabase storage with secure access controls
+- [x] Backend: Create onboarding application APIs for draft creation, save progress, submit, and status lookup
+- [x] Backend: Add applicant profile models for consumer and business onboarding
+- [x] Backend: Implement document metadata and storage reference handling
+- [x] Frontend: Build consumer onboarding wizard for profile, contact, consent, identity, and document steps
+- [x] Frontend: Build business onboarding wizard for business profile, tax info, owners, and document steps
+- [x] Frontend: Add draft resume, validation errors, loading states, and status timeline views
+- [x] Integration: Wire document upload flow to Supabase storage with secure access controls
 
 ### 6. KYC / KYB Integration
 - [ ] Backend: Create KYC/KYB orchestration service with Synctera-compatible request/response adapters
@@ -164,3 +164,4 @@
 - [ ] Build mock/fallback flows for any Synctera sandbox gaps without changing public API boundaries
 - [ ] Create operator cheat sheet for manual retries, webhook replay, and exception handling during the demo
 - [ ] Capture screenshots or backup walkthrough assets in case live integrations degrade during judging
+

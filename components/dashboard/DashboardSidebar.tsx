@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   ActivitySquare,
   Building2,
+  ClipboardCheck,
   CreditCard,
   LayoutDashboard,
   LogOut,
@@ -13,6 +14,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
+  { label: "Onboarding", href: "/onboarding", icon: ClipboardCheck },
   { label: "Accounts", href: "/dashboard", icon: Building2 },
   { label: "Cards", href: "/dashboard", icon: CreditCard },
   { label: "Risk Queue", href: "/dashboard", icon: ShieldAlert, badge: 17 },
@@ -39,12 +41,10 @@ export function DashboardSidebar({ activeHref = "/dashboard", userEmail, signOut
 
   return (
     <aside className="hidden h-full w-64 shrink-0 flex-col border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 lg:flex">
-      {/* Logo */}
       <div className="border-b border-slate-100 px-5 py-4 dark:border-slate-800">
         <BrandLogo href="/dashboard" subtitle="Operations Console" />
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 overflow-y-auto px-3 py-4">
         <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-600">
           Main
@@ -52,7 +52,7 @@ export function DashboardSidebar({ activeHref = "/dashboard", userEmail, signOut
         <div className="space-y-0.5">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = activeHref === item.href && item.label === "Overview";
+            const isActive = activeHref === item.href;
 
             return (
               <Link
@@ -76,12 +76,14 @@ export function DashboardSidebar({ activeHref = "/dashboard", userEmail, signOut
                 />
                 <span className="flex-1">{item.label}</span>
                 {item.badge !== undefined && (
-                  <span className={cn(
-                    "inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[10px] font-bold",
-                    isActive
-                      ? "bg-white/20 text-white"
-                      : "bg-rose-100 text-rose-600 dark:bg-rose-900/40 dark:text-rose-400"
-                  )}>
+                  <span
+                    className={cn(
+                      "inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[10px] font-bold",
+                      isActive
+                        ? "bg-white/20 text-white"
+                        : "bg-rose-100 text-rose-600 dark:bg-rose-900/40 dark:text-rose-400"
+                    )}
+                  >
                     {item.badge}
                   </span>
                 )}
@@ -106,7 +108,6 @@ export function DashboardSidebar({ activeHref = "/dashboard", userEmail, signOut
         </div>
       </nav>
 
-      {/* User profile */}
       {userEmail && (
         <div className="border-t border-slate-100 p-3 dark:border-slate-800">
           <div className="flex items-center gap-3 rounded-lg px-2 py-2">

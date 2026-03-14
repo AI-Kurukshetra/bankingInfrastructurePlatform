@@ -1,5 +1,6 @@
 ﻿import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { checkRateLimit } from "@/lib/auth/rate-limit";
 
 type LoginPayload = {
   email?: string;
@@ -7,6 +8,19 @@ type LoginPayload = {
 };
 
 export async function POST(request: Request) {
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+    request.headers.get("x-real-ip") ??
+    "unknown";
+
+  const { allowed } = checkRateLimit(`login:${ip}`, 10, 60_000);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Too many login attempts. Please try again in a minute." },
+      { status: 429 }
+    );
+  }
+
   let body: LoginPayload;
 
   try {

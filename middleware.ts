@@ -1,4 +1,4 @@
-﻿import type { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { isProtectedPath } from "@/lib/auth/paths";
 import { updateSession } from "@/lib/supabase/middleware";
@@ -24,5 +24,6 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/account/:path*", "/login"]
+  matcher: ["/dashboard/:path*", "/account/:path*", "/onboarding/:path*", "/login"]
 };
+
