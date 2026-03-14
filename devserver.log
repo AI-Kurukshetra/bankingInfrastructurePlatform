@@ -1,0 +1,24 @@
+
+> banking-infrastructure-platform@0.0.0 dev D:\bankingInfrastructurePlatform
+> next dev "--port" "3000"
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+SyntaxError: Unexpected token '﻿', "﻿{
+  "name"... is not valid JSON
+while determining default 'output.uniqueName' from 'name' in D:\bankingInfrastructurePlatform\package.json
+    at JSON.parse (<anonymous>)
+    at D:\bankingInfrastructurePlatform\node_modules\.pnpm\next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\webpack\bundle5.js:28:587886
+    at F (D:\bankingInfrastructurePlatform\node_modules\.pnpm\next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\webpack\bundle5.js:28:578611)
+    at applyOutputDefaults (D:\bankingInfrastructurePlatform\node_modules\.pnpm\next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\webpack\bundle5.js:28:587557)
+    at applyWebpackOptionsDefaults (D:\bankingInfrastructurePlatform\node_modules\.pnpm\next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\webpack\bundle5.js:28:580183)
+    at createCompiler (D:\bankingInfrastructurePlatform\node_modules\.pnpm\next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\webpack\bundle5.js:28:1467460)
+    at D:\bankingInfrastructurePlatform\node_modules\.pnpm\next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\webpack\bundle5.js:28:1467067
+    at Array.map (<anonymous>)
+    at createMultiCompiler (D:\bankingInfrastructurePlatform\node_modules\.pnpm\next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\webpack\bundle5.js:28:1467059)
+    at create (D:\bankingInfrastructurePlatform\node_modules\.pnpm\next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\webpack\bundle5.js:28:1467931)
+[?25h
+
+D:\bankingInfrastructurePlatform>
