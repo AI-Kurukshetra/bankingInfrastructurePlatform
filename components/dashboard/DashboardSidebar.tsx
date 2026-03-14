@@ -17,7 +17,7 @@ const navItems = [
   { label: "Onboarding", href: "/onboarding", icon: ClipboardCheck },
   { label: "Accounts", href: "/dashboard", icon: Building2 },
   { label: "Cards", href: "/dashboard", icon: CreditCard },
-  { label: "Risk Queue", href: "/dashboard", icon: ShieldAlert, badge: 17 },
+  { label: "KYC / KYB Review", href: "/kyc/review", icon: ShieldAlert, badge: 17 },
   { label: "Activity", href: "/dashboard", icon: ActivitySquare }
 ];
 
@@ -137,3 +137,4 @@ export function DashboardSidebar({ activeHref = "/dashboard", userEmail, signOut
     </aside>
   );
 }
+
