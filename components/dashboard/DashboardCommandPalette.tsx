@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CommandIcon, Moon, Sun, Bell } from "lucide-react";
+import { Bell, CommandIcon, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   CommandDialog,
@@ -11,8 +11,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut
+  CommandSeparator
 } from "@/components/ui/command";
 
 export function DashboardCommandPalette() {
@@ -71,9 +70,7 @@ export function DashboardCommandPalette() {
           onClick={toggleTheme}
           title={isDark ? "Switch to light mode" : "Switch to dark mode"}
         >
-          {isDark
-            ? <Sun className="h-4 w-4" aria-hidden="true" />
-            : <Moon className="h-4 w-4" aria-hidden="true" />}
+          {isDark ? <Sun className="h-4 w-4" aria-hidden="true" /> : <Moon className="h-4 w-4" aria-hidden="true" />}
         </Button>
 
         <Button
@@ -94,6 +91,8 @@ export function DashboardCommandPalette() {
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Navigation">
             <CommandItem onSelect={() => goTo("/dashboard")}>Dashboard Overview</CommandItem>
+            <CommandItem onSelect={() => goTo("/dashboard/accounts")}>Accounts</CommandItem>
+            <CommandItem onSelect={() => goTo("/dashboard/kyc-review")}>KYC / KYB Review</CommandItem>
             <CommandItem onSelect={() => goTo("/account/reset-password")}>Account Security</CommandItem>
             <CommandItem onSelect={() => goTo("/forgot-password")}>Forgot Password</CommandItem>
           </CommandGroup>
@@ -109,3 +108,4 @@ export function DashboardCommandPalette() {
     </>
   );
 }
+

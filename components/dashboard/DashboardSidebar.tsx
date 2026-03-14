@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import {
   ActivitySquare,
   Building2,
@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { label: "Onboarding", href: "/onboarding", icon: ClipboardCheck },
-  { label: "Accounts", href: "/dashboard", icon: Building2 },
+  { label: "Accounts", href: "/dashboard/accounts", icon: Building2 },
   { label: "Cards", href: "/dashboard", icon: CreditCard },
-  { label: "KYC / KYB Review", href: "/kyc/review", icon: ShieldAlert, badge: 17 },
+  { label: "KYC / KYB Review", href: "/dashboard/kyc-review", icon: ShieldAlert, badge: 17 },
   { label: "Activity", href: "/dashboard", icon: ActivitySquare }
 ];
 
@@ -137,4 +137,6 @@ export function DashboardSidebar({ activeHref = "/dashboard", userEmail, signOut
     </aside>
   );
 }
+
+
 
