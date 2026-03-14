@@ -1,15 +1,17 @@
 -- Phase 2 KYC/KYB verification workflow table and policies.
 
-create type public.verification_status as enum (
-  'pending',
-  'processing',
-  'approved',
-  'rejected',
-  'manual_review',
-  'failed'
-);
+do $$ begin
+  create type public.verification_status as enum (
+    'pending',
+    'processing',
+    'approved',
+    'rejected',
+    'manual_review',
+    'failed'
+  );
+exception when duplicate_object then null; end $$;
 
-create table public.verification_checks (
+create table if not exists public.verification_checks (
   id                          uuid primary key default gen_random_uuid(),
   onboarding_application_id   uuid not null references public.onboarding_applications (id) on delete cascade,
   idempotency_key             text not null,
@@ -30,18 +32,20 @@ create table public.verification_checks (
   unique (onboarding_application_id, idempotency_key)
 );
 
-create index verification_checks_onboarding_idx
+create index if not exists verification_checks_onboarding_idx
   on public.verification_checks (onboarding_application_id, created_at desc);
 
-create index verification_checks_status_idx
+create index if not exists verification_checks_status_idx
   on public.verification_checks (status);
 
+drop trigger if exists verification_checks_set_updated_at on public.verification_checks;
 create trigger verification_checks_set_updated_at
   before update on public.verification_checks
   for each row execute function public.set_updated_at();
 
 alter table public.verification_checks enable row level security;
 
+drop policy if exists verification_checks_select on public.verification_checks;
 create policy verification_checks_select on public.verification_checks
   for select
   using (
@@ -54,6 +58,7 @@ create policy verification_checks_select on public.verification_checks
     )
   );
 
+drop policy if exists verification_checks_insert on public.verification_checks;
 create policy verification_checks_insert on public.verification_checks
   for insert
   with check (
@@ -61,6 +66,7 @@ create policy verification_checks_insert on public.verification_checks
     or public.current_user_role() in ('admin', 'analyst')
   );
 
+drop policy if exists verification_checks_update_staff on public.verification_checks;
 create policy verification_checks_update_staff on public.verification_checks
   for update
   using (public.current_user_role() in ('admin', 'analyst'))

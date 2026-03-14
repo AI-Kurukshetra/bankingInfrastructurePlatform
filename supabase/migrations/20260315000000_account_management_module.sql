@@ -1,12 +1,14 @@
 ﻿-- Phase 3 account management module: provisioning requests, lifecycle events,
 -- and balance snapshots for UI-friendly reads.
 
-create type public.account_provisioning_status as enum (
-  'pending',
-  'processing',
-  'completed',
-  'failed'
-);
+do $$ begin
+  create type public.account_provisioning_status as enum (
+    'pending',
+    'processing',
+    'completed',
+    'failed'
+  );
+exception when duplicate_object then null; end $$;
 
 alter table public.bank_accounts
   add column if not exists onboarding_application_id uuid references public.onboarding_applications (id) on delete set null,

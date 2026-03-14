@@ -45,3 +45,10 @@
 
 [2026-03-14 17:25] codex - Added Payments & Transfers Module with ACH and internal transfer creation APIs, replay-safe reconciliation via transfer_events, status/history/detail views, staff reconciliation controls, and /dashboard/payments workspace UI
 
+
+[2026-03-14 17:42] codex - Added Cards Module with virtual card issuance requests, card lifecycle events, card-control APIs, transaction feed persistence, /dashboard/cards management UI, and a Synctera-compatible mock card adapter with physical-card extension hooks
+
+
+[2026-03-14 18:35] codex - Added Transaction Monitoring with monitoring_rules/case_notes/case_events schema extension, alert and case-management APIs, /dashboard/monitoring analyst workspace, dashboard navigation updates, and monitoring evaluation hooks in transfer/card/internal-transaction write paths
+
+[2026-03-14 18:45] codex - Added a standalone user-role directory migration, SQL seed, Supabase seed script, and role query examples; live execution blocked pending SUPABASE_SERVICE_ROLE_KEY or direct Postgres credentials

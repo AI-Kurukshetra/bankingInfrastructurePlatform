@@ -46,8 +46,11 @@ Core docs and project tracking live in `doc/`.
 2. Run:
    - `pnpm db:seed`
 3. Seed script creates demo users and sample operational data.
+4. To seed the role-directory tables from this task, run:
+   - `pnpm db:seed:user-roles`
 
 ## Validation
 
 - `pnpm typecheck`
 - `pnpm lint`
+

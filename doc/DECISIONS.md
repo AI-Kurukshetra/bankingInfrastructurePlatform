@@ -74,3 +74,9 @@
 
 ## 2026-03-14 16:18
 - Keep login/signup email fields uncontrolled to prevent automatic default email rendering from app-managed state
+
+## 2026-03-14 18:45
+- Kept the requested `public.users` role directory separate from Supabase `auth.users` and the existing `profiles` table.
+  Rationale: the user explicitly requested a standalone `users` table with custom role/status constraints, and isolating it avoids breaking the existing auth-backed schema.
+- Added a dedicated Supabase seeding script for the new role tables instead of folding them into the existing MVP seed immediately.
+  Rationale: the existing seed provisions auth users and operational banking data, while the new directory is a separate schema track that should remain runnable independently.

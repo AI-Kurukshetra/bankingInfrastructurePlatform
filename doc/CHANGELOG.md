@@ -137,3 +137,10 @@ Add-Content -Path 'doc/DECISIONS.md' -Value @"
 - Removed email input prefill on login/signup by deleting localStorage hydration state in LoginCard
 - Preserved auth flow and Remember me save/clear behavior on submit
 - Validated with pnpm typecheck and pnpm lint
+
+## 2026-03-14 18:45
+- Added `supabase/migrations/20260315040000_user_roles_rbac.sql` for a standalone RBAC user directory (`users`, `consumer_profiles`, `business_profiles`, `developer_profiles`)
+- Added `supabase/seed_user_roles.sql` with re-runnable demo data for the five requested user roles
+- Added `scripts/seed-user-roles.mjs` and wired `pnpm db:seed:user-roles` for seeding the new tables through the Supabase service-role client
+- Added `supabase/examples/user_role_queries.sql` with example role-based lookup queries
+- Updated README and doc/SCHEMA.md with the new seed command and schema extension

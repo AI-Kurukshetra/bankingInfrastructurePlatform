@@ -35,8 +35,9 @@ export function AuthPageShell({ eyebrow, title, description, children }: AuthPag
         <div className="absolute right-[-10rem] top-[-6rem] h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.18),transparent_65%)] blur-3xl" />
       </div>
 
-      <div className="relative mx-auto flex min-h-dvh max-w-7xl items-center px-6 py-12 lg:px-10">
+      <div className="relative mx-auto flex min-h-dvh max-w-7xl items-center px-4 py-10 sm:px-6 sm:py-12 lg:px-10">
         <div className="grid w-full gap-10 lg:grid-cols-[1.05fr_0.78fr] lg:items-center">
+          {/* Left panel — hidden on mobile */}
           <section className="hidden lg:block">
             <BrandLogo href="/" subtitle="Launch, monitor, and operate banking products in one workspace." />
             <p className="mt-12 text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">{eyebrow}</p>
@@ -48,7 +49,6 @@ export function AuthPageShell({ eyebrow, title, description, children }: AuthPag
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {authHighlights.map((highlight) => {
                 const Icon = highlight.icon;
-
                 return (
                   <div
                     key={highlight.title}
@@ -70,7 +70,8 @@ export function AuthPageShell({ eyebrow, title, description, children }: AuthPag
             </div>
           </section>
 
-          <div className="mx-auto w-full max-w-[520px]">{children}</div>
+          {/* Form — full width on mobile, constrained on desktop */}
+          <div className="mx-auto w-full max-w-[480px] lg:max-w-[520px]">{children}</div>
         </div>
       </div>
     </main>

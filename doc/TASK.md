@@ -75,23 +75,23 @@
 - [x] Integration: Add retry-safe handling for duplicate submission and webhook replay scenarios
 
 ### 9. Cards Module
-- [ ] Backend: Implement virtual debit card issuance workflow for approved accounts
-- [ ] Backend: Create card APIs for activation, freeze/unfreeze, termination, and control updates
-- [ ] Backend: Persist card lifecycle events and card transaction feed records
-- [ ] Frontend: Build card management screen with status, controls, and transaction feed
-- [ ] Frontend: Add spending control forms for limits and merchant-category restrictions where supported
-- [ ] Integration: Connect Synctera card issuance and card-control endpoints through an internal adapter
-- [ ] Integration: Prepare physical card support as a non-MVP extension point without blocking virtual-card delivery
+- [x] Backend: Implement virtual debit card issuance workflow for approved accounts
+- [x] Backend: Create card APIs for activation, freeze/unfreeze, termination, and control updates
+- [x] Backend: Persist card lifecycle events and card transaction feed records
+- [x] Frontend: Build card management screen with status, controls, and transaction feed
+- [x] Frontend: Add spending control forms for limits and merchant-category restrictions where supported
+- [x] Integration: Connect Synctera card issuance and card-control endpoints through an internal adapter
+- [x] Integration: Prepare physical card support as a non-MVP extension point without blocking virtual-card delivery
 
 ## Phase 4: Monitoring, Operations, And Internal Tooling
 
 ### 10. Transaction Monitoring
-- [ ] Backend: Define configurable MVP monitoring rules for velocity, amount thresholds, and anomalies
-- [ ] Backend: Build alert generation pipeline from account, payment, and card transaction events
-- [ ] Backend: Create case management APIs for assignment, notes, disposition, and escalation
-- [ ] Frontend: Build analyst alert queue with filterable severity, status, and assignee views
-- [ ] Frontend: Build case detail screen with evidence timeline, notes, and disposition actions
-- [ ] Integration: Trigger monitoring evaluation from webhook events and internal transaction writes
+- [x] Backend: Define configurable MVP monitoring rules for velocity, amount thresholds, and anomalies
+- [x] Backend: Build alert generation pipeline from account, payment, and card transaction events
+- [x] Backend: Create case management APIs for assignment, notes, disposition, and escalation
+- [x] Frontend: Build analyst alert queue with filterable severity, status, and assignee views
+- [x] Frontend: Build case detail screen with evidence timeline, notes, and disposition actions
+- [x] Integration: Trigger monitoring evaluation from webhook events and internal transaction writes
 
 ### 11. Admin Dashboard
 - [ ] Backend: Build admin aggregation endpoints for onboarding, payments, cards, alerts, cases, and webhook health
@@ -164,6 +164,8 @@
 - [ ] Build mock/fallback flows for any Synctera sandbox gaps without changing public API boundaries
 - [ ] Create operator cheat sheet for manual retries, webhook replay, and exception handling during the demo
 - [ ] Capture screenshots or backup walkthrough assets in case live integrations degrade during judging
+
+
 
 
 

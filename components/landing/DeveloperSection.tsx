@@ -13,12 +13,12 @@ const devItems = [
 
 export function DeveloperSection() {
   return (
-    <section id="developers" className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+    <section id="developers" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
       <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Developer experience</p>
-          <h2 className="mt-3 text-4xl font-semibold tracking-[-0.03em] text-slate-950">Ship faster with APIs, events, sandbox tooling, and clear docs</h2>
-          <p className="mt-4 text-lg leading-8 text-slate-600">Build and iterate with predictable API contracts while operations teams stay aligned in the same platform.</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-3xl lg:text-4xl">Ship faster with APIs, events, sandbox tooling, and clear docs</h2>
+          <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">Build and iterate with predictable API contracts while operations teams stay aligned in the same platform.</p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {devItems.map((item) => {
@@ -27,7 +27,7 @@ export function DeveloperSection() {
                 <Card key={item.title} className="rounded-2xl border-slate-200 bg-white shadow-sm">
                   <CardHeader className="pb-2">
                     <Icon className="h-5 w-5 text-blue-700" aria-hidden="true" />
-                    <CardTitle className="pt-3 text-lg text-slate-950">{item.title}</CardTitle>
+                    <CardTitle className="pt-3 text-base text-slate-950 sm:text-lg">{item.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm leading-6 text-slate-600">{item.description}</p>
@@ -42,13 +42,13 @@ export function DeveloperSection() {
 
         <Card className="overflow-hidden rounded-2xl border-slate-200 bg-slate-950 text-slate-100 shadow-[0_24px_60px_rgba(15,23,42,0.25)]">
           <CardHeader className="border-b border-slate-800 pb-3">
-            <CardTitle className="text-lg text-white">Sample API request</CardTitle>
+            <CardTitle className="text-base text-white sm:text-lg">Sample API request</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
-            <pre className="overflow-x-auto p-5 text-sm leading-7 text-blue-100">
-{`curl -X POST https://api.bip.local/v1/accounts \
-  -H "Authorization: Bearer <api_key>" \
-  -H "Content-Type: application/json" \
+            <pre className="overflow-x-auto p-4 text-xs leading-6 text-blue-100 sm:p-5 sm:text-sm sm:leading-7">
+{`curl -X POST https://api.bip.local/v1/accounts \\
+  -H "Authorization: Bearer <api_key>" \\
+  -H "Content-Type: application/json" \\
   -d '{
     "customer_id": "cus_82941",
     "account_type": "checking",

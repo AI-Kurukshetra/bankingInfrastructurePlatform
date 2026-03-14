@@ -93,6 +93,8 @@ export function DashboardCommandPalette() {
             <CommandItem onSelect={() => goTo("/dashboard")}>Dashboard Overview</CommandItem>
             <CommandItem onSelect={() => goTo("/dashboard/accounts")}>Accounts</CommandItem>
             <CommandItem onSelect={() => goTo("/dashboard/payments")}>Payments</CommandItem>
+            <CommandItem onSelect={() => goTo("/dashboard/cards")}>Cards</CommandItem>
+            <CommandItem onSelect={() => goTo("/dashboard/activity")}>Activity Log</CommandItem>
             <CommandItem onSelect={() => goTo("/dashboard/kyc-review")}>KYC / KYB Review</CommandItem>
             <CommandItem onSelect={() => goTo("/account/reset-password")}>Account Security</CommandItem>
             <CommandItem onSelect={() => goTo("/forgot-password")}>Forgot Password</CommandItem>
@@ -109,3 +111,4 @@ export function DashboardCommandPalette() {
     </>
   );
 }
+

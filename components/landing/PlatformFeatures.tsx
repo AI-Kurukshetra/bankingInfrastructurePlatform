@@ -27,14 +27,14 @@ const features = [
 
 export function PlatformFeatures() {
   return (
-    <section id="product" className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+    <section id="product" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
       <div className="max-w-3xl">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Platform overview</p>
-        <h2 className="mt-3 text-4xl font-semibold tracking-[-0.03em] text-slate-950">One infrastructure layer for modern financial products</h2>
-        <p className="mt-4 text-lg text-slate-600">Unify onboarding, account controls, payment flows, card management, and compliance operations in a single platform.</p>
+        <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-3xl lg:text-4xl">One infrastructure layer for modern financial products</h2>
+        <p className="mt-4 text-base text-slate-600 sm:text-lg">Unify onboarding, account controls, payment flows, card management, and compliance operations in a single platform.</p>
       </div>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {features.map((feature) => {
           const Icon = feature.icon;
           return (
@@ -43,7 +43,7 @@ export function PlatformFeatures() {
                 <span className="inline-flex w-fit rounded-xl bg-blue-50 p-2 text-blue-700">
                   <Icon className="h-4 w-4" aria-hidden="true" />
                 </span>
-                <CardTitle className="pt-4 text-lg leading-6 text-slate-950">{feature.title}</CardTitle>
+                <CardTitle className="pt-4 text-base leading-6 text-slate-950 sm:text-lg">{feature.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm leading-6 text-slate-600">{feature.description}</p>

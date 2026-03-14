@@ -18,7 +18,7 @@ const links = [
 export function LandingNavbar({ isAuthenticated }: LandingNavbarProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/85 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-10">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-4 lg:px-10">
         <BrandLogo href="/" compact />
 
         <nav className="hidden items-center gap-7 md:flex">
@@ -50,6 +50,7 @@ export function LandingNavbar({ isAuthenticated }: LandingNavbarProps) {
           )}
         </div>
 
+        {/* Mobile CTA */}
         <Link
           href={isAuthenticated ? "/dashboard" : "/signup"}
           className={cn(buttonVariants({ size: "sm" }), "bg-blue-600 hover:bg-blue-700 md:hidden")}

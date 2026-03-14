@@ -20,15 +20,15 @@ const socials = [
 
 export function LandingFooter() {
   return (
-    <footer className="border-t border-slate-200 bg-white/80 px-6 py-10 lg:px-10">
-      <div className="mx-auto flex max-w-7xl flex-col gap-7 md:flex-row md:items-start md:justify-between">
+    <footer className="border-t border-slate-200 bg-white/80 px-4 py-8 sm:px-6 sm:py-10 lg:px-10">
+      <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-start md:justify-between">
         <div>
           <BrandLogo href="/" compact className="mb-3" />
           <p className="text-sm text-slate-500">Copyright 2026 {BRAND_NAME}. All rights reserved.</p>
         </div>
 
         <div className="flex flex-col gap-4">
-          <div className="flex flex-wrap items-center gap-5">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-5">
             {footerLinks.map((link) => (
               <Link key={link.label} href={link.href} className="text-sm text-slate-600 transition hover:text-blue-700">
                 {link.label}

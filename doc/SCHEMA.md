@@ -7,6 +7,7 @@
 | `20260314124500_initial_auth_and_core.sql` | Core tables, enums, RLS, auth trigger |
 | `20260314210000_extended_schema.sql` | Onboarding, transactions, webhooks, API keys, documents, audit log enhancements |
 | `20260315010000_payments_and_transfers_module.sql` | ACH/internal transfer rails, reconciliation events, idempotency, and return/failure status support |
+| `20260315020000_cards_module.sql` | Virtual card issuance requests, lifecycle events, control metadata, and card transaction feed persistence |
 
 ---
 
@@ -17,7 +18,7 @@
 | `app_role` | `customer`, `analyst`, `admin`, `developer` |
 | `account_status` | `active`, `frozen`, `closed` |
 | `transfer_status` | `pending`, `processing`, `settled`, `returned`, `failed` |
-| `card_status` | `active`, `frozen`, `terminated` |
+| `card_status` | `inactive`, `active`, `frozen`, `terminated` |
 | `alert_severity` | `low`, `medium`, `high` |
 | `case_status` | `open`, `investigating`, `resolved`, `closed` |
 | `onboarding_type` | `consumer`, `business` |
@@ -124,8 +125,18 @@ A virtual or physical debit card linked to a bank account.
 | `id` | `uuid` PK | |
 | `account_id` | `uuid` | References `bank_accounts.id` |
 | `last4` | `text` | Last 4 digits |
-| `status` | `card_status` | Default `active` |
+| `status` | `card_status` | `inactive`, `active`, `frozen`, `terminated` |
+| `provider_card_id` | `text` | External provider reference |
+| `form_factor` | `card_form_factor` | `virtual` or `physical` |
+| `nickname` | `text` | Optional display label |
+| `cardholder_name` | `text` | Printed/virtual cardholder name |
+| `network` | `text` | Default `visa` |
 | `spending_limit_cents` | `integer` | Optional per-card limit |
+| `spending_controls` | `jsonb` | MCC and channel restrictions |
+| `issued_at` | `timestamptz` | Issuance timestamp |
+| `activated_at` | `timestamptz` | Set on activation |
+| `frozen_at` | `timestamptz` | Set when frozen |
+| `terminated_at` | `timestamptz` | Set on termination |
 | `created_at` | `timestamptz` | |
 | `updated_at` | `timestamptz` | Auto-updated |
 
@@ -471,3 +482,108 @@ Key fields:
 - Analyst/Admin can read all transfer events.
 - Insert is restricted to staff or service-role backed server workflows.
 
+
+---
+
+## Cards Extension (20260315020000_cards_module.sql)
+
+### New enums
+- `card_form_factor`: `virtual`, `physical`
+- `card_issuance_status`: `pending`, `processing`, `completed`, `failed`
+- `card_transaction_status`: `authorized`, `posted`, `declined`, `reversed`
+
+### cards additions
+- Adds provider card reference, form-factor support, nickname/cardholder metadata, spending controls, and lifecycle timestamps.
+
+### New table: `card_issuance_requests`
+Tracks replay-safe card issuance attempts by account and idempotency key.
+
+Key fields:
+- `account_id`, `idempotency_key`, `requested_by`, `form_factor`
+- `status`, `card_id`, `provider_request`, `provider_response`, `error_message`
+
+### New table: `card_lifecycle_events`
+Operational timeline for issuance, activation, freeze/unfreeze, termination, and control changes.
+
+Key fields:
+- `card_id`, `account_id`, `event_type`
+- `previous_status`, `next_status`, `actor_user_id`, `source`, `details`
+
+### New table: `card_transaction_feed`
+Customer-visible card transaction activity feed, separate from the bank-account ledger rows.
+
+Key fields:
+- `card_id`, `account_id`, `status`, `amount`, `currency`
+- `merchant_name`, `merchant_category_code`, `network_reference`
+- `metadata`, `authorized_at`, `posted_at`, `created_at`
+
+### RLS summary
+- Customers can read cards, lifecycle events, and card feed rows tied to their accessible accounts, including organization membership accounts.
+- Analyst/Admin can read all and write issuance requests, lifecycle events, and feed records.
+- Physical card support is modeled through `form_factor` without blocking virtual-card issuance paths.
+
+
+
+---
+
+## Transaction Monitoring Extension (20260315030000_transaction_monitoring.sql)
+
+### New enums
+- `monitoring_source_type`: `payment_transfer`, `account_transaction`, `card_transaction`
+- `case_priority`: `low`, `medium`, `high`
+- `case_disposition`: `pending_review`, `monitor`, `false_positive`, `customer_outreach`, `escalated`, `suspicious_activity`
+
+### New table: `monitoring_rules`
+Configurable MVP rule registry that allows the same monitoring pipeline to evaluate transfer, account-transaction, and card-transaction events.
+
+Key fields:
+- `rule_code`, `name`, `severity`, `source_types`, `is_active`
+- `config`, `created_by_user_id`, `created_at`, `updated_at`
+
+### alerts additions
+- Adds `rule_code`, `source_type`, `source_record_id`, `transaction_id`, `card_id`, `dedup_key`, `payload`, `escalated_at`, and `last_evaluated_at`.
+- `dedup_key` is unique when present so duplicate webhook replays and repeat internal writes do not open duplicate cases.
+
+### cases additions
+- Adds `priority`, `disposition`, `escalated_at`, `closed_at`, and `last_activity_at`.
+- Keeps analyst workflow state separate from the raw alert payload.
+
+### New table: `case_notes`
+Internal-only analyst notes attached to a monitoring case.
+
+Key fields:
+- `case_id`, `author_user_id`, `note`, `visibility`, `created_at`
+
+### New table: `case_events`
+Case timeline entries for assignment, disposition changes, escalation, and note activity.
+
+Key fields:
+- `case_id`, `event_type`, `title`, `details`, `actor_user_id`, `created_at`
+
+### Seeded MVP rules
+- `transfer_amount_threshold`: flags large transfers above configured amount threshold.
+- `account_transfer_velocity`: flags accounts with repeated outbound ledger debits inside a rolling window.
+- `card_spend_anomaly`: flags high-ticket, high-risk MCC, and decline-pattern card feed activity.
+
+### RLS summary
+- Monitoring rules are visible to staff and manageable by admin/developer roles.
+- Case notes and case events are visible to analyst/admin/developer roles only.
+- Alert and case base-table policies remain staff-only with assignee access preserved on cases.
+
+## User Role Directory Extension (20260315040000_user_roles_rbac.sql)
+
+### New tables
+- `users`: standalone RBAC user directory with allowed roles `consumer`, `business`, `compliance_analyst`, `admin`, `developer_partner` and allowed statuses `active`, `pending`, `suspended`
+- `consumer_profiles`: one-to-one profile table with `date_of_birth`, `address`, and `kyc_status` (`pending`, `approved`, `rejected`)
+- `business_profiles`: one-to-one profile table with `company_name`, `business_type`, `registration_number`, and `kyb_status` (`pending`, `approved`, `rejected`)
+- `developer_profiles`: one-to-one profile table with `organization_name`, `api_key`, and `sandbox_enabled`
+
+### Indexes
+- `users.email` unique index
+- `users.role` index
+- unique indexes on `consumer_profiles.user_id`, `business_profiles.user_id`, and `developer_profiles.user_id`
+
+### Seed assets
+- SQL seed file: `supabase/seed_user_roles.sql`
+- Supabase seed script: `scripts/seed-user-roles.mjs`
+- Example role queries: `supabase/examples/user_role_queries.sql`

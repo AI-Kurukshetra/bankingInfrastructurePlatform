@@ -45,3 +45,8 @@
 
 - [x] 2026-03-14 17:25 Implement Phase 3 Payments & Transfers Module: ACH + internal transfer APIs, replay-safe reconciliation/events, payments dashboard UI, and Synctera-compatible mock payment adapter
 
+
+- [x] 2026-03-14 17:42 Implement Phase 3 Cards Module: virtual card issuance, lifecycle/control APIs, card management UI, transaction feed persistence, and Synctera-compatible mock card adapter
+
+
+- [x] 2026-03-14 18:35 Implement Phase 4 Transaction Monitoring Module: configurable monitoring rules, alert/case service layer, monitoring APIs, analyst queue/detail workspace, and payment/card/internal-transaction evaluation hooks

@@ -11,24 +11,24 @@ const opsCards = [
 
 export function OperationsPreview() {
   return (
-    <section className="border-y border-slate-200 bg-white/70 px-6 py-20 lg:px-10">
+    <section className="border-y border-slate-200 bg-white/70 px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
       <div className="mx-auto max-w-7xl">
         <div className="max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Operations platform</p>
-          <h2 className="mt-3 text-4xl font-semibold tracking-[-0.03em] text-slate-950">Built for teams running daily financial operations</h2>
+          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-3xl lg:text-4xl">Built for teams running daily financial operations</h2>
         </div>
 
-        <div className="mt-10 grid gap-4 lg:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {opsCards.map((item) => {
             const Icon = item.icon;
             return (
               <Card key={item.title} className="rounded-2xl border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
                 <CardHeader className="pb-2">
                   <Icon className="h-5 w-5 text-blue-700" aria-hidden="true" />
-                  <CardTitle className="pt-3 text-lg text-slate-950">{item.title}</CardTitle>
+                  <CardTitle className="pt-3 text-base text-slate-950 sm:text-lg">{item.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-semibold text-slate-950">{item.value}</p>
+                  <p className="text-xl font-semibold text-slate-950 sm:text-2xl">{item.value}</p>
                   <p className="mt-2 text-sm leading-6 text-slate-600">{item.note}</p>
                 </CardContent>
               </Card>

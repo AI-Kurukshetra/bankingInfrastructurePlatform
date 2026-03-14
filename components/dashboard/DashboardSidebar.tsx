@@ -8,7 +8,8 @@ import {
   LayoutDashboard,
   LogOut,
   Settings,
-  ShieldAlert
+  ShieldAlert,
+  X
 } from "lucide-react";
 import { BrandLogo } from "@/components/shared/BrandLogo";
 import { cn } from "@/lib/utils";
@@ -18,15 +19,18 @@ const navItems = [
   { label: "Onboarding", href: "/onboarding", icon: ClipboardCheck },
   { label: "Accounts", href: "/dashboard/accounts", icon: Building2 },
   { label: "Payments", href: "/dashboard/payments", icon: ArrowLeftRight },
-  { label: "Cards", href: "/dashboard", icon: CreditCard },
+  { label: "Cards", href: "/dashboard/cards", icon: CreditCard },
   { label: "KYC / KYB Review", href: "/dashboard/kyc-review", icon: ShieldAlert, badge: 17 },
-  { label: "Activity", href: "/dashboard", icon: ActivitySquare }
+  { label: "Activity", href: "/dashboard/activity", icon: ActivitySquare }
 ];
 
 type DashboardSidebarProps = {
   activeHref?: string;
   userEmail?: string;
   signOut?: () => Promise<void | never>;
+  /** When true, renders as flex (used inside the mobile drawer) */
+  mobile?: boolean;
+  onClose?: () => void;
 };
 
 function getInitials(email: string) {
@@ -38,13 +42,34 @@ function getInitials(email: string) {
   return name.slice(0, 2).toUpperCase();
 }
 
-export function DashboardSidebar({ activeHref = "/dashboard", userEmail, signOut }: DashboardSidebarProps) {
+export function DashboardSidebar({
+  activeHref = "/dashboard",
+  userEmail,
+  signOut,
+  mobile = false,
+  onClose
+}: DashboardSidebarProps) {
   const initials = userEmail ? getInitials(userEmail) : "??";
 
   return (
-    <aside className="hidden h-full w-64 shrink-0 flex-col border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 lg:flex">
-      <div className="border-b border-slate-100 px-5 py-4 dark:border-slate-800">
+    <aside
+      className={cn(
+        "h-full w-64 shrink-0 flex-col border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900",
+        mobile ? "flex" : "hidden lg:flex"
+      )}
+    >
+      <div className="relative border-b border-slate-100 px-5 py-4 dark:border-slate-800">
         <BrandLogo href="/dashboard" subtitle="Operations Console" />
+        {mobile && onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close navigation"
+            className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+          >
+            <X className="h-4 w-4" aria-hidden="true" />
+          </button>
+        )}
       </div>
 
       <nav className="flex-1 overflow-y-auto px-3 py-4">
@@ -60,6 +85,7 @@ export function DashboardSidebar({ activeHref = "/dashboard", userEmail, signOut
               <Link
                 key={item.label}
                 href={item.href}
+                onClick={mobile ? onClose : undefined}
                 className={cn(
                   "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150",
                   isActive
@@ -102,6 +128,7 @@ export function DashboardSidebar({ activeHref = "/dashboard", userEmail, signOut
         <div className="space-y-0.5">
           <Link
             href="/account/reset-password"
+            onClick={mobile ? onClose : undefined}
             className="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 transition-all hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
           >
             <Settings className="h-4 w-4 shrink-0 text-slate-400 group-hover:text-blue-500" aria-hidden="true" />
@@ -139,3 +166,4 @@ export function DashboardSidebar({ activeHref = "/dashboard", userEmail, signOut
     </aside>
   );
 }
+
