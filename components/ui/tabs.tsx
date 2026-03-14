@@ -42,7 +42,7 @@ const tabsListVariants = cva(
          * Use for primary page-level or section-level tab navigation.
          */
         default: [
-          "bg-slate-100 rounded-xl p-1 gap-0.5",
+          "bg-slate-100 dark:bg-slate-800 rounded-xl p-1 gap-0.5",
           "group-data-[orientation=vertical]/tabs:w-52",
         ].join(" "),
 
@@ -55,10 +55,10 @@ const tabsListVariants = cva(
           // Horizontal: full-width with bottom divider
           "group-data-[orientation=horizontal]/tabs:w-full",
           "group-data-[orientation=horizontal]/tabs:border-b",
-          "group-data-[orientation=horizontal]/tabs:border-slate-200",
+          "group-data-[orientation=horizontal]/tabs:border-slate-200 dark:group-data-[orientation=horizontal]/tabs:border-slate-800",
           // Vertical: right divider
           "group-data-[orientation=vertical]/tabs:border-r",
-          "group-data-[orientation=vertical]/tabs:border-slate-200",
+          "group-data-[orientation=vertical]/tabs:border-slate-200 dark:group-data-[orientation=vertical]/tabs:border-slate-800",
         ].join(" "),
       },
     },
@@ -102,25 +102,25 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
         "group-data-[variant=default]/tabs-list:px-3.5",
         "group-data-[variant=default]/tabs-list:py-1.5",
         "group-data-[variant=default]/tabs-list:rounded-[10px]",
-        "group-data-[variant=default]/tabs-list:text-slate-500",
-        "group-data-[variant=default]/tabs-list:hover:text-slate-700",
-        "group-data-[variant=default]/tabs-list:hover:bg-white/70",
+        "group-data-[variant=default]/tabs-list:text-slate-500 dark:group-data-[variant=default]/tabs-list:text-slate-400",
+        "group-data-[variant=default]/tabs-list:hover:text-slate-700 dark:group-data-[variant=default]/tabs-list:hover:text-slate-200",
+        "group-data-[variant=default]/tabs-list:hover:bg-white/70 dark:group-data-[variant=default]/tabs-list:hover:bg-slate-700/80",
         // Vertical: full-width left-aligned
         "group-data-[orientation=vertical]/tabs:group-data-[variant=default]/tabs-list:w-full",
         "group-data-[orientation=vertical]/tabs:group-data-[variant=default]/tabs-list:justify-start",
 
         // ── Default (pill) — active ──────────────────────────────────────────
         // White chip rises off the tray; blue text marks selection clearly
-        "group-data-[variant=default]/tabs-list:data-[active]:bg-white",
+        "group-data-[variant=default]/tabs-list:data-[active]:bg-white dark:group-data-[variant=default]/tabs-list:data-[active]:bg-slate-900",
         "group-data-[variant=default]/tabs-list:data-[active]:text-blue-700",
         "group-data-[variant=default]/tabs-list:data-[active]:shadow-[0_1px_3px_rgba(0,0,0,0.10),0_0_0_1px_rgba(0,0,0,0.04)]",
-        "group-data-[variant=default]/tabs-list:data-[active]:hover:bg-white",
+        "group-data-[variant=default]/tabs-list:data-[active]:hover:bg-white dark:group-data-[variant=default]/tabs-list:data-[active]:hover:bg-slate-900",
 
         // ── Line — inactive ──────────────────────────────────────────────────
         "group-data-[variant=line]/tabs-list:px-4",
         "group-data-[variant=line]/tabs-list:py-2.5",
-        "group-data-[variant=line]/tabs-list:text-slate-500",
-        "group-data-[variant=line]/tabs-list:hover:text-slate-900",
+        "group-data-[variant=line]/tabs-list:text-slate-500 dark:group-data-[variant=line]/tabs-list:text-slate-400",
+        "group-data-[variant=line]/tabs-list:hover:text-slate-900 dark:group-data-[variant=line]/tabs-list:hover:text-slate-100",
         // Vertical: left-aligned
         "group-data-[orientation=vertical]/tabs:group-data-[variant=line]/tabs-list:justify-start",
         // Horizontal underline — transparent when inactive

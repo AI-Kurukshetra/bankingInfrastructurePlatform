@@ -18,7 +18,7 @@ export default async function HomePage() {
   } = await supabase.auth.getUser();
 
   return (
-    <main className="min-h-dvh bg-[#f8fafc] text-slate-900">
+    <main className="min-h-dvh bg-[#f8fafc] text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <LandingNavbar isAuthenticated={Boolean(user)} />
       <HeroSection />
       <PlatformFeatures />

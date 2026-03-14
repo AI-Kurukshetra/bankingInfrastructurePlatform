@@ -39,12 +39,12 @@ export default async function MonitoringPage() {
       {isStaff ? (
         <MonitoringWorkspace role={profile.role} />
       ) : (
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white py-20 text-center shadow-sm">
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white py-20 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
             <Radar className="h-7 w-7 text-blue-500" aria-hidden="true" />
           </div>
-          <h2 className="mt-4 text-base font-semibold text-slate-900">Access Restricted</h2>
-          <p className="mt-2 max-w-sm text-sm text-slate-500">
+          <h2 className="mt-4 text-base font-semibold text-slate-900 dark:text-slate-100">Access Restricted</h2>
+          <p className="mt-2 max-w-sm text-sm text-slate-500 dark:text-slate-400">
             Transaction monitoring is available to analysts, administrators, and developers only.
           </p>
         </div>

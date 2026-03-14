@@ -57,3 +57,4 @@
 
 [2026-03-14 19:25] codex - Fixed corrupted admin dashboard source in lib/admin/service.ts that broke the /dashboard route chunk; validated with pnpm typecheck and pnpm lint
 [2026-03-14 20:05] codex - Completed the Admin Dashboard module with admin aggregation/export APIs, a role-aware /dashboard control center, queue review detail panels with timelines/support notes, and validated with pnpm typecheck, pnpm lint, and pnpm build
+[2026-03-14 20:18] codex - Normalized dark-theme card rendering across shared pages by adding global dark utility overrides in app/globals.css, updating shared tab/input primitives, patching page shells with explicit dark surfaces, and validating with pnpm typecheck, pnpm lint, and pnpm build

@@ -11,7 +11,7 @@ export default async function DevelopersPage() {
   } = await supabase.auth.getUser();
 
   return (
-    <main className="min-h-dvh bg-[#f8fafc] text-slate-900">
+    <main className="min-h-dvh bg-[#f8fafc] text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <LandingNavbar isAuthenticated={Boolean(user)} />
       <section className="mx-auto max-w-7xl px-6 pb-8 pt-16 lg:px-10">
         <div className="max-w-3xl">
