@@ -6,6 +6,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { VerificationStatusCard } from "@/components/kyc/VerificationStatusCard";
 import type { OnboardingStatus, OnboardingType } from "@/lib/onboarding/model";
 
 type OnboardingDocument = {
@@ -686,6 +687,13 @@ function OnboardingPanel({
           </CardContent>
         </Card>
 
+        {selectedApplication ? (
+          <VerificationStatusCard
+            applicationId={selectedApplication.id}
+            applicationStatus={selectedApplication.status}
+          />
+        ) : null}
+
         <Card className="border border-slate-200 bg-white">
           <CardHeader>
             <CardTitle>Status Timeline</CardTitle>
@@ -708,6 +716,8 @@ function OnboardingPanel({
     </div>
   );
 }
+
+
 
 
 

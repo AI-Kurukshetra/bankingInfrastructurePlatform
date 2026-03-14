@@ -1,4 +1,4 @@
-# FinStack MVP Task Plan
+﻿# FinStack MVP Task Plan
 
 ## Phase 1: Foundation
 
@@ -6,14 +6,14 @@
 - [ ] Initialize Next.js 15 app with TypeScript strict mode and `pnpm`
 - [ ] Configure path aliases, ESLint, Prettier, and shared tsconfig rules
 - [ ] Add Tailwind CSS, shadcn/ui, React Hook Form, Zod, TanStack Query, and `nuqs`
-- [ ] Set up `.env.example` with Supabase, Synctera, notification, and logging variables
+- [ ] Set up `.env.local` with Supabase, Synctera, notification, and logging variables
 - [ ] Create base app structure for `(auth)`, `(dashboard)`, `api`, `components`, `lib`, `hooks`, `types`, `supabase`, `tests`, and `doc`
 - [ ] Add shared utility modules for API errors, trace IDs, idempotency keys, and date/currency formatting
 
 ### 2. Infrastructure Setup
 - [ ] Provision Supabase project for database, auth, storage, and row-level security
 - [ ] Configure Vercel project with staging and demo environments
-- [ ] Set up secret management for Supabase, Synctera, email/SMS, and observability providers
+- [ ] Set up secret management for Supabase, email/SMS, and observability providers
 - [ ] Create environment-based config loader for server and client-safe variables
 - [ ] Add CI workflow to run `pnpm lint`, `pnpm typecheck`, and `pnpm test`
 - [ ] Set up storage buckets for identity and business verification documents
@@ -27,13 +27,13 @@
 - [x] Document schema, relationships, and RLS rules in `/doc/SCHEMA.md`
 
 ### 4. Authentication & Authorization
-- [ ] Backend: Configure Supabase Auth for customer and admin login flows
-- [ ] Backend: Implement session-aware Supabase server/client helpers and middleware refresh logic
-- [ ] Backend: Define RBAC model for customer, analyst, admin, and developer roles
-- [ ] Backend: Add API key issuance, storage, hashing, and rotation flow for partner access
-- [ ] Frontend: Build sign-in, sign-up, password reset, and session expiration screens
-- [ ] Frontend: Protect dashboard routes and show unauthorized/error states
-- [ ] Integration: Enforce rate limiting and request authentication on public API routes
+- [x] Backend: Configure Supabase Auth for customer and admin login flows
+- [x] Backend: Implement session-aware Supabase server/client helpers and middleware refresh logic
+- [x] Backend: Define RBAC model for customer, analyst, admin, and developer roles
+- [x] Backend: Add API key issuance, storage, hashing, and rotation flow for partner access
+- [x] Frontend: Build sign-in, sign-up, password reset, and session expiration screens
+- [x] Frontend: Protect dashboard routes and show unauthorized/error states
+- [x] Integration: Enforce rate limiting and request authentication on public API routes
 
 ## Phase 2: Onboarding And Compliance
 
@@ -47,23 +47,23 @@
 - [x] Integration: Wire document upload flow to Supabase storage with secure access controls
 
 ### 6. KYC / KYB Integration
-- [ ] Backend: Create KYC/KYB orchestration service with Synctera-compatible request/response adapters
-- [ ] Backend: Persist verification results, evidence references, sanctions checks, and review notes
-- [ ] Backend: Implement manual review states, resubmission support, and retry-safe processing
-- [ ] Frontend: Show verification progress, approval/rejection states, and user-safe failure messaging
-- [ ] Frontend: Build analyst review queue for flagged consumer and business applications
-- [ ] Integration: Connect Synctera sandbox KYC/KYB endpoints or mock adapters behind the same service boundary
-- [ ] Integration: Add OFAC/PEP/watchlist screening hooks and normalized result handling
+- [x] Backend: Create KYC/KYB orchestration service with Synctera-compatible request/response adapters
+- [x] Backend: Persist verification results, evidence references, sanctions checks, and review notes
+- [x] Backend: Implement manual review states, resubmission support, and retry-safe processing
+- [x] Frontend: Show verification progress, approval/rejection states, and user-safe failure messaging
+- [x] Frontend: Build analyst review queue for flagged consumer and business applications
+- [x] Integration: Connect Synctera sandbox KYC/KYB endpoints or mock adapters behind the same service boundary
+- [x] Integration: Add OFAC/PEP/watchlist screening hooks and normalized result handling
 
 ## Phase 3: Accounts, Payments, And Cards
 
 ### 7. Account Management Module
-- [ ] Backend: Implement approved-application to account-creation workflow with idempotency protection
-- [ ] Backend: Create account APIs for details, balances, status, and transaction listing
-- [ ] Backend: Persist account lifecycle events and ledger-view snapshots for UI reads
-- [ ] Frontend: Build account summary page with balances, account metadata, and recent activity
-- [ ] Frontend: Add admin controls for freeze, unfreeze, and close-account actions with confirmations
-- [ ] Integration: Connect Synctera account creation and account detail endpoints to internal services
+- [x] Backend: Implement approved-application to account-creation workflow with idempotency protection
+- [x] Backend: Create account APIs for details, balances, status, and transaction listing
+- [x] Backend: Persist account lifecycle events and ledger-view snapshots for UI reads
+- [x] Frontend: Build account summary page with balances, account metadata, and recent activity
+- [x] Frontend: Add admin controls for freeze, unfreeze, and close-account actions with confirmations
+- [x] Integration: Connect Synctera account creation and account detail endpoints to internal services
 
 ### 8. Payments & Transfers Module
 - [ ] Backend: Implement ACH transfer creation with validation, idempotency keys, and status tracking
@@ -164,4 +164,6 @@
 - [ ] Build mock/fallback flows for any Synctera sandbox gaps without changing public API boundaries
 - [ ] Create operator cheat sheet for manual retries, webhook replay, and exception handling during the demo
 - [ ] Capture screenshots or backup walkthrough assets in case live integrations degrade during judging
+
+
 

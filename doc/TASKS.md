@@ -38,3 +38,7 @@
 [x] 2026-03-14 16:18 Remove login/signup email prefill behavior from auth form
 
 - [x] 2026-03-14 16:24 Implement Phase 2 User Onboarding Module: draft/save/submit/status APIs, consumer+business wizards, draft resume/timeline UX, and Supabase document upload integration with storage policies
+
+- [x] 2026-03-14 16:36 Implement Phase 2 KYC/KYB Integration: orchestration service + Synctera-compatible mock adapter, verification persistence, analyst review queue, and applicant verification progress/resubmission flows
+
+- [x] 2026-03-14 16:56 Implement Phase 3 Account Management Module: approved-application account provisioning with idempotency, account APIs, lifecycle events/snapshots, account summary UI, and admin freeze/unfreeze/close controls

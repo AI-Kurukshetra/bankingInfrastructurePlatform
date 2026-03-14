@@ -371,3 +371,66 @@ cards
 - Requires: `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`
 - Seeds: demo users, organization, memberships, bank accounts, card, transfer, alert, case, and audit log entry
 - Safe to re-run (uses upsert)
+
+---
+
+## KYC/KYB Extension (20260314230000_kyc_kyb_verification.sql)
+
+### New enum
+- `verification_status`: `pending`, `processing`, `approved`, `rejected`, `manual_review`, `failed`
+
+### New table: `verification_checks`
+Stores each verification attempt tied to an onboarding application with idempotency and analyst review context.
+
+Key columns:
+- `onboarding_application_id` (FK to `onboarding_applications`)
+- `idempotency_key` (unique per application for retry-safe processing)
+- `provider`, `attempt_number`, `status`, `decision_reason`
+- `sanctions_checks` (normalized OFAC/PEP/watchlist results)
+- `evidence_references` (document paths used in checks)
+- `provider_request`, `provider_response`, `error_message`
+- `requested_by`, `reviewed_by`, `review_notes`, timestamps
+
+### RLS summary
+- Customer: can view checks for their own application.
+- Analyst/Admin: can view all checks and update review outcomes.
+- Insert allowed for authenticated requester on own actions (or staff).
+
+---
+
+## Account Management Extension (20260315000000_account_management_module.sql)
+
+### New enum
+- `account_provisioning_status`: `pending`, `processing`, `completed`, `failed`
+
+### bank_accounts additions
+- `onboarding_application_id` (nullable FK, unique when set)
+- `synctera_account_id` (nullable provider reference, unique when set)
+
+### New table: `account_provisioning_requests`
+Tracks idempotent approved-application to account-creation attempts.
+
+Key fields:
+- `onboarding_application_id`, `idempotency_key` (composite unique)
+- `requested_by`, `status`, `account_id`
+- `provider`, `provider_request`, `provider_response`, `error_message`
+
+### New table: `account_lifecycle_events`
+Operational timeline for account status and sync events.
+
+Key fields:
+- `account_id`, `event_type`
+- `previous_status`, `next_status`
+- `actor_user_id`, `source`, `details`, `created_at`
+
+### New table: `account_balance_snapshots`
+Ledger-view snapshots for account summary UI reads.
+
+Key fields:
+- `account_id`, `available_balance`, `currency`
+- `source_event_id`, `captured_by_user_id`, `captured_at`
+
+### RLS summary
+- Customers can read lifecycle events/snapshots only for owned accounts.
+- Analyst/Admin can read all and write provisioning, lifecycle events, and snapshots.
+- Provisioning requests are readable by requester and staff.

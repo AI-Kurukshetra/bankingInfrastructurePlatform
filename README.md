@@ -7,7 +7,7 @@ Core docs and project tracking live in `doc/`.
 1. Install dependencies:
    - `pnpm install`
 2. Configure environment:
-   - Copy `.env.example` to `.env.local`
+   - Create `.env.local`
    - Set `NEXT_PUBLIC_SUPABASE_URL`
    - Set `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - Set `NEXT_PUBLIC_APP_URL` (used by forgot-password redirect)

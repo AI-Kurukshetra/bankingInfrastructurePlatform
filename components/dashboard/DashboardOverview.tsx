@@ -144,28 +144,15 @@ export function DashboardOverview() {
       {/* Tabs */}
       <Tabs defaultValue="transactions" className="space-y-4">
         <div className="flex items-center justify-between gap-4">
-          <TabsList className="h-10 rounded-xl border border-slate-100 bg-slate-50 p-1 dark:border-slate-800 dark:bg-slate-900">
-            <TabsTrigger
-              value="transactions"
-              className="rounded-lg px-4 text-sm data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-700 dark:data-[state=active]:bg-slate-800 dark:data-[state=active]:text-blue-400"
-            >
-              Transactions
-            </TabsTrigger>
-            <TabsTrigger
-              value="risk"
-              className="rounded-lg px-4 text-sm data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-700 dark:data-[state=active]:bg-slate-800 dark:data-[state=active]:text-blue-400"
-            >
+          <TabsList>
+            <TabsTrigger value="transactions">Transactions</TabsTrigger>
+            <TabsTrigger value="risk">
               Risk Queue
-              <span className="ml-2 inline-flex h-4.5 min-w-[18px] items-center justify-center rounded-full bg-rose-100 px-1.5 py-0.5 text-[10px] font-bold text-rose-600 dark:bg-rose-900/40 dark:text-rose-400">
+              <span className="inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-rose-100 px-1 text-[10px] font-bold text-rose-600 dark:bg-rose-900/40 dark:text-rose-400">
                 3
               </span>
             </TabsTrigger>
-            <TabsTrigger
-              value="liquidity"
-              className="rounded-lg px-4 text-sm data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-700 dark:data-[state=active]:bg-slate-800 dark:data-[state=active]:text-blue-400"
-            >
-              Liquidity
-            </TabsTrigger>
+            <TabsTrigger value="liquidity">Liquidity</TabsTrigger>
           </TabsList>
         </div>
 

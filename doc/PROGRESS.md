@@ -38,3 +38,7 @@
 [2026-03-14 16:18] codex - Updated LoginCard to stop preloading remembered email into auth forms and validated with typecheck/lint
 
 [2026-03-14 16:24] codex - Implemented Phase 2 User Onboarding Module with onboarding APIs, typed consumer/business form models, /onboarding workspace UI (wizards, draft resume, validation, timeline), document metadata route, storage-backed upload flow, and migration for applicant update + storage access policies
+
+[2026-03-14 16:36] codex - Added KYC/KYB integration: verification_checks schema migration with RLS, Synctera-compatible mock orchestration service, onboarding verification APIs (start/status/resubmit), analyst review queue APIs, applicant verification status UI, and analyst queue UI with decision actions
+
+[2026-03-14 16:56] codex - Added Account Management Module with provisioning workflow from approved onboarding applications, Synctera-compatible accounts adapter, /api/accounts routes (details/balances/status/transactions/sync), lifecycle event + balance snapshot persistence, and /dashboard/accounts summary UI with admin freeze/unfreeze/close actions

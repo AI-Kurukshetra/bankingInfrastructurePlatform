@@ -400,7 +400,7 @@ chore/<short-description>
 
 ## 🔒 Security Baseline
 
-- Never commit secrets — `.env.local` gitignored; commit `.env.example` with blank values
+- Never commit secrets - `.env.local` must stay local and gitignored
 - Never expose service role key to client or browser
 - Validate all inputs with Zod before any DB write
 - Sanitize user content — avoid `dangerouslySetInnerHTML`
@@ -455,3 +455,4 @@ Needs:     <what human input is required>
 ```
 
 **Never guess past a blocker. Never fake a missing env value. Surface it and stop.**
+

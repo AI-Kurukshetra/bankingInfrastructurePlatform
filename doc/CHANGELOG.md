@@ -39,7 +39,7 @@
 - Added lib/supabase helpers for environment, browser client, and server client
 - Added API routes: POST /api/auth/login and GET /api/supabase/health
 - Integrated login form submit with Supabase-backed auth endpoint and status feedback
-- Added .env.example entries for Supabase URL and anon key
+- Added .env.local entries for Supabase URL and anon key
 
 
 ## 2026-03-14 12:31
@@ -53,7 +53,7 @@
 - Upgraded login UI to support both sign-in and sign-up flows with redirect handling
 - Added supabase/migrations/20260314124500_initial_auth_and_core.sql with core tables, triggers, and RLS policies
 - Added scripts/seed-supabase.mjs and pnpm db:seed command for demo users and sample operational data
-- Updated README and .env.example for new auth and seeding requirements
+- Updated README and .env.local for new auth and seeding requirements
 
 
 ## 2026-03-14 12:49
@@ -63,7 +63,7 @@
 - Added reusable ForgotPasswordCard and ResetPasswordCard components
 - Linked login screen forgot-password action and dashboard reset-password action
 - Expanded middleware protection to include /account routes
-- Added NEXT_PUBLIC_APP_URL to .env.example for reset redirect URL
+- Added NEXT_PUBLIC_APP_URL to .env.local for reset redirect URL
 
 
 ## 2026-03-14 12:52
