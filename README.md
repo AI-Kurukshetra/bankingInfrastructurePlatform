@@ -1,4 +1,4 @@
-# Banking Infrastructure Platform MVP
+# FinStack MVP
 
 Core docs and project tracking live in `doc/`.
 

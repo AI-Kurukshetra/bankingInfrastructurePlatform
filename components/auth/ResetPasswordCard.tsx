@@ -1,8 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { AuthCardShell } from "@/components/auth/AuthCardShell";
+import { buttonVariants } from "@/components/ui/button";
 import TextField from "@/components/ui/TextField";
+import { cn } from "@/lib/utils";
 
 export default function ResetPasswordCard() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,15 +54,22 @@ export default function ResetPasswordCard() {
   }
 
   return (
-    <section className="w-full rounded-3xl border border-slate-200/70 bg-white/70 p-7 shadow-soft backdrop-blur-xl">
-      <h1 className="text-[22px] font-semibold tracking-[-0.02em] text-slate-900">
-        Reset password
-      </h1>
-      <p className="mt-2 text-[13px] leading-relaxed text-slate-600">
-        Set a new password for your account.
-      </p>
-
-      <form className="mt-5 space-y-4" onSubmit={handleSubmit}>
+    <AuthCardShell
+      title="Update your password"
+      description="Choose a new password for your workspace account and keep access secure."
+      footer={
+        <div className="text-center text-[13px] text-slate-600">
+          Need to go back?{" "}
+          <Link
+            href="/dashboard"
+            className="font-medium text-blue-700 underline decoration-blue-200 underline-offset-4 hover:text-blue-800"
+          >
+            Return to dashboard
+          </Link>
+        </div>
+      }
+    >
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="relative">
           <TextField
             label="New password"
@@ -69,16 +80,12 @@ export default function ResetPasswordCard() {
           />
           <button
             type="button"
-            className="absolute right-3 top-3 rounded-lg p-1.5 text-slate-600 transition hover:bg-slate-900/5 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15"
+            className="absolute right-3 top-3 rounded-lg p-1.5 text-slate-500 transition hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"
             onClick={() => setShowPassword((value) => !value)}
             aria-pressed={showPassword}
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
-            {showPassword ? (
-              <EyeOff className="h-4 w-4" aria-hidden="true" />
-            ) : (
-              <Eye className="h-4 w-4" aria-hidden="true" />
-            )}
+            {showPassword ? <EyeOff className="h-4 w-4" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
           </button>
         </div>
 
@@ -92,29 +99,25 @@ export default function ResetPasswordCard() {
           />
           <button
             type="button"
-            className="absolute right-3 top-3 rounded-lg p-1.5 text-slate-600 transition hover:bg-slate-900/5 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15"
+            className="absolute right-3 top-3 rounded-lg p-1.5 text-slate-500 transition hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"
             onClick={() => setShowConfirmPassword((value) => !value)}
             aria-pressed={showConfirmPassword}
             aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
           >
-            {showConfirmPassword ? (
-              <EyeOff className="h-4 w-4" aria-hidden="true" />
-            ) : (
-              <Eye className="h-4 w-4" aria-hidden="true" />
-            )}
+            {showConfirmPassword ? <EyeOff className="h-4 w-4" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
           </button>
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-[14px] font-semibold text-white shadow-sm transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+          className={cn(buttonVariants({ size: "lg" }), "w-full rounded-2xl bg-blue-600 hover:bg-blue-700")}
         >
           {isSubmitting ? "Updating..." : "Update password"}
         </button>
 
         {message ? <p className="text-center text-[13px] text-slate-600">{message}</p> : null}
       </form>
-    </section>
+    </AuthCardShell>
   );
 }

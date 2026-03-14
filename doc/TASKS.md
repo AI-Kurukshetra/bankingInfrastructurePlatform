@@ -24,3 +24,15 @@
 - [x] 2026-03-14 12:56 Implement reset-link page with new password and confirm password
 
 - [x] 2026-03-14 13:00 Add eye icon show/hide toggles for password fields
+
+- [x] 2026-03-14 13:14 Install shadcn/ui and implement fintech design system with dashboard components
+
+- [x] 2026-03-14 13:52 Resolve Tailwind build errors and add dashboard sidebar + command palette + dark mode
+
+- [x] 2026-03-14 14:32 Build modern fintech landing page, signup route, and developer docs entry page
+[x] 2026-03-14 15:05 Fix server-component runtime error caused by importing uttonVariants from a client-only button module
+[x] 2026-03-14 15:20 Standardize branding and design-system shells across landing, auth, and dashboard pages
+
+[x] 2026-03-14 16:05 Replace landing page with a completely new fintech SaaS narrative and component structure
+
+[x] 2026-03-14 16:18 Remove login/signup email prefill behavior from auth form

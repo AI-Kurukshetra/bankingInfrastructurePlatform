@@ -82,3 +82,58 @@
 - Updated LoginCard password visibility toggle to use lucide-react Eye/EyeOff icons
 - Added Eye/EyeOff show/hide toggles for both password fields in ResetPasswordCard
 - Added Eye/EyeOff show/hide toggles for both password fields in ResetPasswordFromLinkCard
+
+
+## 2026-03-14 13:14
+- Initialized shadcn/ui (components.json, lib/utils.ts, updated globals and layout)
+- Added shadcn dashboard primitives: button, card, badge, input, table, tabs, progress, avatar
+- Added fintech design tokens in app/globals.css centered around primary color #2563EB
+- Added reusable dashboard metric component and full dashboard overview module
+- Replaced basic dashboard page with tokenized shadcn-based fintech dashboard layout
+
+
+## 2026-03-14 13:52
+- Fixed Tailwind token utility generation by extending tailwind.config.ts with semantic color mappings
+- Removed incompatible shadcn Tailwind import and unsupported outline utility causing build failures
+- Added dark mode token palette in app/globals.css
+- Added dashboard sidebar navigation and keyboard command palette (Ctrl+K) components
+- Added theme toggle (light/dark) integrated with dashboard command actions
+- Verified full production build succeeds after clearing stale .next cache
+
+## 2026-03-14 14:32
+- Replaced app/page.tsx redirect with a production-style fintech landing page
+- Added reusable landing components under components/landing for navbar, hero, features, architecture, developer platform, security, workflow, dashboard preview, pricing, CTA, and footer
+- Added auth-aware navbar logic using Supabase session detection on the server
+- Added /signup route reusing the auth card in signup mode
+- Added /developers route as a developer docs landing page
+- Validated with pnpm typecheck, pnpm lint, and pnpm build
+## 2026-03-14 15:05
+- Fixed the uttonVariants is not a function runtime error by making components/ui/button.tsx server-safe for App Router imports
+- Reapplied the reset-password action styling on the dashboard and verified / and /dashboard behavior after a clean restart
+- Validated with pnpm typecheck, pnpm lint, and pnpm build
+"@;
+Add-Content -Path 'doc/DECISIONS.md' -Value @"
+## 2026-03-14 15:05
+- Keep components/ui/button.tsx free of a use client directive so uttonVariants can be imported into server components without becoming a client reference proxy
+## 2026-03-14 15:20
+- Added shared brand constants and a reusable BrandLogo component for consistent naming across landing, auth, and dashboard surfaces
+- Introduced shared auth page/card shells and updated login, signup, forgot-password, and reset-password flows to use the same visual system
+- Aligned dashboard and landing navigation/footer branding and refreshed form field styling to match the blue fintech design language
+- Validated with pnpm typecheck, pnpm lint, and pnpm build
+"@;
+Add-Content -Path 'doc/DECISIONS.md' -Value @"
+## 2026-03-14 15:20
+- Centralize product naming in lib/brand.ts so page-level copy and shared UI primitives use one brand source of truth
+- Use shared auth shells instead of repeating page-specific backgrounds to keep security and account flows visually consistent with the landing experience
+
+## 2026-03-14 16:05
+- Replaced app/page.tsx to use a fully new landing page composition and section flow
+- Implemented new landing components: LandingNavbar, HeroSection, PlatformFeatures, InfrastructureSection, HowItWorks, OperationsPreview, DeveloperSection, SecuritySection, BenefitsSection, CTASection, LandingFooter
+- Removed obsolete landing components/content tied to the previous page structure
+- Updated all landing copy to original fintech product messaging with no external company references
+- Validated with pnpm typecheck, pnpm lint, and pnpm build
+
+## 2026-03-14 16:18
+- Removed email input prefill on login/signup by deleting localStorage hydration state in LoginCard
+- Preserved auth flow and Remember me save/clear behavior on submit
+- Validated with pnpm typecheck and pnpm lint

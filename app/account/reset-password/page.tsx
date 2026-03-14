@@ -1,4 +1,5 @@
-﻿import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
+import { AuthPageShell } from "@/components/auth/AuthPageShell";
 import ResetPasswordCard from "@/components/auth/ResetPasswordCard";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -13,14 +14,12 @@ export default async function AccountResetPasswordPage() {
   }
 
   return (
-    <main className="relative min-h-dvh overflow-hidden">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_60%_40%,rgba(14,165,233,0.14),rgba(99,102,241,0.06),rgba(248,250,252,0))]" />
-      </div>
-
-      <div className="relative mx-auto flex min-h-dvh max-w-[520px] items-center px-6 py-16">
-        <ResetPasswordCard />
-      </div>
-    </main>
+    <AuthPageShell
+      eyebrow="Account security"
+      title="Keep your workspace secure with the same design and controls used across the platform."
+      description="Update your password without leaving the FinStack experience and return to operations when you are done."
+    >
+      <ResetPasswordCard />
+    </AuthPageShell>
   );
 }

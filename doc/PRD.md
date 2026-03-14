@@ -3,10 +3,10 @@
 ## 1. Product Overview
 
 ### 1.1 Product Name
-**Banking Infrastructure Platform MVP**
+**FinStack MVP**
 
 ### 1.2 Product Summary
-The Banking Infrastructure Platform MVP is a fintech platform built on top of Synctera's Banking-as-a-Service (BaaS) infrastructure to help fintech teams launch regulated banking products quickly. The platform will provide a developer-friendly and operations-ready foundation for customer onboarding, KYC/KYB verification, account creation, payments, debit card management, transaction monitoring, and internal administration.
+The FinStack MVP is a fintech platform built on top of Synctera's Banking-as-a-Service (BaaS) infrastructure to help fintech teams launch regulated banking products quickly. The platform will provide a developer-friendly and operations-ready foundation for customer onboarding, KYC/KYB verification, account creation, payments, debit card management, transaction monitoring, and internal administration.
 
 The MVP is intended for hackathon delivery, but it will be structured like a production-grade platform with modular services, auditability, role-based controls, and API-first design. The initial release will focus on core deposit-account and debit-card use cases, using Synctera as the primary banking and compliance infrastructure layer.
 

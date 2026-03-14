@@ -51,3 +51,26 @@
 ## 2026-03-14 13:00
 - Standardized password visibility controls to icon-based toggles (Eye/EyeOff) across auth forms.  
   Rationale: provides clearer and more compact password visibility affordance than text toggles, while keeping behavior consistent.
+
+## 2026-03-14 13:14
+- Standardized UI foundation on shadcn/ui with tokenized CSS variables and primary theme #2563EB.  
+  Rationale: provides consistent, reusable component primitives and enables predictable fintech branding across dashboard modules.
+
+## 2026-03-14 13:52
+- Normalized shadcn token usage for Tailwind v3 by mapping semantic CSS-variable colors in tailwind.config.ts.  
+  Rationale: ensures classes like g-background, 	ext-foreground, and component token utilities compile reliably in Next 14 + Tailwind 3 builds.
+- Added command palette and theme toggle as dashboard shell-level utilities, not page-local widgets.  
+  Rationale: keeps productivity actions and theme control consistently available across dashboard modules.
+
+## 2026-03-14 14:32
+- Reused the existing LoginCard for /signup by adding an initialMode prop instead of forking a second auth form.  
+  Rationale: keeps login/signup behavior consistent and reduces duplicated auth UI logic.
+- Implemented landing-page auth detection on the server using the Supabase server client before rendering navigation.  
+  Rationale: ensures the navbar reliably switches between Login/Sign Up and Dashboard based on the active session without client-only flicker.
+
+## 2026-03-14 16:05
+- Use a section-based component architecture for landing under components/landing so narrative and UX can evolve independently without touching page orchestration
+- Keep authentication-aware navbar behavior server-side via supabase.auth.getUser() in app/page.tsx
+
+## 2026-03-14 16:18
+- Keep login/signup email fields uncontrolled to prevent automatic default email rendering from app-managed state

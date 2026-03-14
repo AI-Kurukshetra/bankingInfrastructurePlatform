@@ -1,4 +1,4 @@
-# Banking Infrastructure Platform MVP Task Plan
+# FinStack MVP Task Plan
 
 ## Phase 1: Foundation
 

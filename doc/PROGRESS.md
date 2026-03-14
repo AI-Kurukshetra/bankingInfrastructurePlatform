@@ -24,3 +24,15 @@
 [2026-03-14 12:56] codex - Added /reset-password link-destination flow with new password + confirm password and Supabase token/session handling
 
 [2026-03-14 13:00] codex - Replaced text show/hide toggles with Eye/EyeOff icon buttons across login and password reset forms
+
+[2026-03-14 13:14] codex - Initialized shadcn/ui, added dashboard primitives, applied primary #2563EB theme tokens, and rebuilt dashboard UI with shadcn components
+
+[2026-03-14 13:52] codex - Fixed Tailwind token class build failures, added sidebar + command palette + theme toggle to dashboard, and validated successful production build
+
+[2026-03-14 14:32] codex - Replaced root redirect with a full landing page, added reusable landing sections, created /signup and /developers pages, and validated production build
+[2026-03-14 15:05] codex - Removed the client boundary from components/ui/button.tsx, restored dashboard button styling with buttonVariants, restarted the dev server, and verified both runtime and production build
+[2026-03-14 15:20] codex - Added shared brand primitives, rebuilt auth pages around a common page shell/card shell, aligned dashboard and landing branding, and validated typecheck, lint, and production build
+
+[2026-03-14 16:05] codex - Replaced the entire root landing page with a new fintech SaaS design and original content, added new section components, removed legacy landing components, and validated with typecheck/lint/build
+
+[2026-03-14 16:18] codex - Updated LoginCard to stop preloading remembered email into auth forms and validated with typecheck/lint

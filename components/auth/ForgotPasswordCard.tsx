@@ -1,7 +1,11 @@
-﻿"use client";
+"use client";
 
+import Link from "next/link";
 import { useState } from "react";
+import { AuthCardShell } from "@/components/auth/AuthCardShell";
+import { buttonVariants } from "@/components/ui/button";
 import TextField from "@/components/ui/TextField";
+import { cn } from "@/lib/utils";
 
 export default function ForgotPasswordCard() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,27 +43,34 @@ export default function ForgotPasswordCard() {
   }
 
   return (
-    <section className="w-full rounded-3xl border border-slate-200/70 bg-white/70 p-7 shadow-soft backdrop-blur-xl">
-      <h1 className="text-[22px] font-semibold tracking-[-0.02em] text-slate-900">
-        Forgot password
-      </h1>
-      <p className="mt-2 text-[13px] leading-relaxed text-slate-600">
-        Enter your account email and we will send a password reset link.
-      </p>
-
-      <form className="mt-5 space-y-4" onSubmit={handleSubmit}>
+    <AuthCardShell
+      title="Reset your password"
+      description="Enter the email tied to your workspace and we will send a secure reset link."
+      footer={
+        <div className="text-center text-[13px] text-slate-600">
+          Remembered your password?{" "}
+          <Link
+            href="/login"
+            className="font-medium text-blue-700 underline decoration-blue-200 underline-offset-4 hover:text-blue-800"
+          >
+            Back to sign in
+          </Link>
+        </div>
+      }
+    >
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <TextField label="Email" name="email" type="email" autoComplete="email" required />
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-[14px] font-semibold text-white shadow-sm transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+          className={cn(buttonVariants({ size: "lg" }), "w-full rounded-2xl bg-blue-600 hover:bg-blue-700")}
         >
           {isSubmitting ? "Sending..." : "Send reset link"}
         </button>
 
         {message ? <p className="text-center text-[13px] text-slate-600">{message}</p> : null}
       </form>
-    </section>
+    </AuthCardShell>
   );
 }

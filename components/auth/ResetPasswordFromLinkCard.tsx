@@ -1,9 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { AuthCardShell } from "@/components/auth/AuthCardShell";
+import { buttonVariants } from "@/components/ui/button";
 import TextField from "@/components/ui/TextField";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
 
 export default function ResetPasswordFromLinkCard() {
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
@@ -101,15 +105,22 @@ export default function ResetPasswordFromLinkCard() {
   }
 
   return (
-    <section className="w-full rounded-3xl border border-slate-200/70 bg-white/70 p-7 shadow-soft backdrop-blur-xl">
-      <h1 className="text-[22px] font-semibold tracking-[-0.02em] text-slate-900">
-        Reset password
-      </h1>
-      <p className="mt-2 text-[13px] leading-relaxed text-slate-600">
-        Set your new password from the reset link.
-      </p>
-
-      <form className="mt-5 space-y-4" onSubmit={handleSubmit}>
+    <AuthCardShell
+      title="Set your new password"
+      description="Complete recovery from your email link and return to the FinStack workspace."
+      footer={
+        <div className="text-center text-[13px] text-slate-600">
+          Already reset it?{" "}
+          <Link
+            href="/login"
+            className="font-medium text-blue-700 underline decoration-blue-200 underline-offset-4 hover:text-blue-800"
+          >
+            Sign in now
+          </Link>
+        </div>
+      }
+    >
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="relative">
           <TextField
             label="New password"
@@ -120,16 +131,12 @@ export default function ResetPasswordFromLinkCard() {
           />
           <button
             type="button"
-            className="absolute right-3 top-3 rounded-lg p-1.5 text-slate-600 transition hover:bg-slate-900/5 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15"
+            className="absolute right-3 top-3 rounded-lg p-1.5 text-slate-500 transition hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"
             onClick={() => setShowPassword((value) => !value)}
             aria-pressed={showPassword}
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
-            {showPassword ? (
-              <EyeOff className="h-4 w-4" aria-hidden="true" />
-            ) : (
-              <Eye className="h-4 w-4" aria-hidden="true" />
-            )}
+            {showPassword ? <EyeOff className="h-4 w-4" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
           </button>
         </div>
 
@@ -143,29 +150,25 @@ export default function ResetPasswordFromLinkCard() {
           />
           <button
             type="button"
-            className="absolute right-3 top-3 rounded-lg p-1.5 text-slate-600 transition hover:bg-slate-900/5 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15"
+            className="absolute right-3 top-3 rounded-lg p-1.5 text-slate-500 transition hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"
             onClick={() => setShowConfirmPassword((value) => !value)}
             aria-pressed={showConfirmPassword}
             aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
           >
-            {showConfirmPassword ? (
-              <EyeOff className="h-4 w-4" aria-hidden="true" />
-            ) : (
-              <Eye className="h-4 w-4" aria-hidden="true" />
-            )}
+            {showConfirmPassword ? <EyeOff className="h-4 w-4" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
           </button>
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-[14px] font-semibold text-white shadow-sm transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+          className={cn(buttonVariants({ size: "lg" }), "w-full rounded-2xl bg-blue-600 hover:bg-blue-700")}
         >
           {isSubmitting ? "Updating..." : "Reset password"}
         </button>
 
         {message ? <p className="text-center text-[13px] text-slate-600">{message}</p> : null}
       </form>
-    </section>
+    </AuthCardShell>
   );
 }

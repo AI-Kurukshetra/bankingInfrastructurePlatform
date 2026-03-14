@@ -1,4 +1,8 @@
-﻿import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
+import { ShieldCheck } from "lucide-react";
+import { DashboardOverview } from "@/components/dashboard/DashboardOverview";
+import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
+import { DashboardCommandPalette } from "@/components/dashboard/DashboardCommandPalette";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export default async function DashboardPage() {
@@ -18,46 +22,46 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
+  const firstName = user.email?.split("@")[0].split(/[._-]/)[0] ?? "there";
+  const displayName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col gap-6 px-6 py-12">
-      <header className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <p className="text-sm text-slate-500">Authenticated session</p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
-          Dashboard
-        </h1>
-        <p className="mt-2 text-sm text-slate-600">
-          Signed in as <span className="font-medium text-slate-800">{user.email}</span>
-        </p>
-      </header>
+    <div className="flex h-dvh w-full overflow-hidden bg-slate-50 dark:bg-slate-950">
+      {/* Fixed sidebar */}
+      <DashboardSidebar
+        activeHref="/dashboard"
+        userEmail={user.email}
+        signOut={signOut}
+      />
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="text-base font-semibold text-slate-900">Account Security</h2>
-        <p className="mt-2 text-sm text-slate-600">
-          Use account security settings to update your password.
-        </p>
-        <a
-          href="/account/reset-password"
-          className="mt-4 inline-flex rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
-        >
-          Reset password
-        </a>
-      </section>
+      {/* Main content column */}
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        {/* Sticky topbar */}
+        <header className="flex shrink-0 items-center justify-between gap-4 border-b border-slate-200 bg-white px-6 py-3.5 dark:border-slate-800 dark:bg-slate-900">
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-widest text-slate-400 dark:text-slate-500">
+              Operations Workspace
+            </p>
+            <h1 className="mt-0.5 text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+              Good morning, {displayName} 👋
+            </h1>
+          </div>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="text-base font-semibold text-slate-900">Auth Utilities</h2>
-        <p className="mt-2 text-sm text-slate-600">
-          Use the API routes at <code>/api/auth/session</code> and <code>/api/auth/logout</code>
-          for client integrations.
-        </p>
-        <form action={signOut} className="mt-4">
-          <button
-            type="submit"
-            className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
-          >
-            Sign out
-          </button>
-        </form>
-      </section>
-    </main>
+          <div className="flex items-center gap-3">
+            <div className="hidden items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 dark:border-emerald-800 dark:bg-emerald-950/40 sm:flex">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+              <span className="text-xs font-medium text-emerald-700 dark:text-emerald-300">All systems healthy</span>
+            </div>
+            <DashboardCommandPalette />
+          </div>
+        </header>
+
+        {/* Scrollable content */}
+        <main className="flex-1 overflow-y-auto px-6 py-6">
+          <DashboardOverview />
+        </main>
+      </div>
+    </div>
   );
 }
