@@ -1,5 +1,7 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import {
+  ActivitySquare,
   ArrowRight,
   ArrowUpRight,
   Building2,
@@ -121,8 +123,21 @@ const moduleLinks = [
     icon: CreditCard,
     accent: "from-blue-600/25 via-indigo-500/15 to-transparent",
     iconTone: "text-blue-600 dark:text-blue-300"
+  },
+  {
+    title: "Activity",
+    href: "/dashboard/activity",
+    description: "Review the platform-wide event log with dummy audit activity and operator follow-ups.",
+    icon: ActivitySquare,
+    accent: "from-violet-500/20 via-fuchsia-500/10 to-transparent",
+    iconTone: "text-violet-600 dark:text-violet-300"
   }
 ];
+
+const tabScrollerStyle: CSSProperties = {
+  scrollbarWidth: "none",
+  WebkitOverflowScrolling: "touch"
+};
 
 function statusBadgeTone(status: string) {
   if (status === "Settled") return "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800";
@@ -186,10 +201,10 @@ export function DashboardOverview() {
             </p>
           </div>
           <span className="hidden rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 sm:inline-flex">
-            5 live modules
+            {moduleLinks.length} live modules
           </span>
         </div>
-        <div className="grid gap-3 p-3 sm:gap-4 sm:p-5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-3 p-3 sm:grid-cols-2 sm:gap-4 sm:p-5 xl:grid-cols-5">
           {moduleLinks.map((module) => {
             const Icon = module.icon;
 
@@ -222,7 +237,6 @@ export function DashboardOverview() {
 
       <Card className="flex min-h-0 flex-1 flex-col overflow-hidden border-slate-100/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
         <Tabs defaultValue="transactions" className="flex min-h-0 flex-1 flex-col gap-0">
-          {/* Tab header â€” stacks on mobile, inline on sm+ */}
           <div className="shrink-0 border-b border-slate-100 dark:border-slate-800">
             <div className="flex flex-col gap-2 px-4 pb-3 pt-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5 sm:pb-4">
               <div>
@@ -231,10 +245,9 @@ export function DashboardOverview() {
                   Live data across transactions, risk alerts, and liquidity.
                 </p>
               </div>
-              {/* Scrollable tabs wrapper â€” allows overflow on narrow screens */}
               <div
                 className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:overflow-visible sm:px-0"
-                style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+                style={tabScrollerStyle}
               >
                 <TabsList className="shrink-0">
                   <TabsTrigger value="transactions">Transactions</TabsTrigger>
@@ -261,45 +274,45 @@ export function DashboardOverview() {
               </Button>
             </div>
             <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="border-slate-50 hover:bg-transparent dark:border-slate-800">
-                  <TableHead className="pl-6 text-xs font-semibold uppercase tracking-wide text-slate-400">Transfer ID</TableHead>
-                  <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Customer</TableHead>
-                  <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Rails</TableHead>
-                  <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Amount</TableHead>
-                  <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Status</TableHead>
-                  <TableHead className="pr-6 text-right text-xs font-semibold uppercase tracking-wide text-slate-400">Time</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {transactions.map((tx) => (
-                  <TableRow
-                    key={tx.id}
-                    className="border-slate-50 transition-colors hover:bg-slate-50/80 dark:border-slate-800 dark:hover:bg-slate-800/50"
-                  >
-                    <TableCell className="pl-6 font-mono text-sm font-medium text-slate-800 dark:text-slate-200">
-                      {tx.id}
-                    </TableCell>
-                    <TableCell className="text-sm text-slate-700 dark:text-slate-300">{tx.customer}</TableCell>
-                    <TableCell>
-                      <span className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
-                        {tx.rails}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-                      {tx.amount}
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className={statusBadgeTone(tx.status)}>
-                        {tx.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="pr-6 text-right text-xs text-slate-400">{tx.time}</TableCell>
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-slate-50 hover:bg-transparent dark:border-slate-800">
+                    <TableHead className="pl-6 text-xs font-semibold uppercase tracking-wide text-slate-400">Transfer ID</TableHead>
+                    <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Customer</TableHead>
+                    <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Rails</TableHead>
+                    <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Amount</TableHead>
+                    <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-400">Status</TableHead>
+                    <TableHead className="pr-6 text-right text-xs font-semibold uppercase tracking-wide text-slate-400">Time</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {transactions.map((tx) => (
+                    <TableRow
+                      key={tx.id}
+                      className="border-slate-50 transition-colors hover:bg-slate-50/80 dark:border-slate-800 dark:hover:bg-slate-800/50"
+                    >
+                      <TableCell className="pl-6 font-mono text-sm font-medium text-slate-800 dark:text-slate-200">
+                        {tx.id}
+                      </TableCell>
+                      <TableCell className="text-sm text-slate-700 dark:text-slate-300">{tx.customer}</TableCell>
+                      <TableCell>
+                        <span className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+                          {tx.rails}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                        {tx.amount}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className={statusBadgeTone(tx.status)}>
+                          {tx.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="pr-6 text-right text-xs text-slate-400">{tx.time}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
           </TabsContent>
 
@@ -375,4 +388,3 @@ export function DashboardOverview() {
     </div>
   );
 }
-

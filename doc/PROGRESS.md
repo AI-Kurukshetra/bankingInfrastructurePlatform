@@ -52,3 +52,7 @@
 [2026-03-14 18:35] codex - Added Transaction Monitoring with monitoring_rules/case_notes/case_events schema extension, alert and case-management APIs, /dashboard/monitoring analyst workspace, dashboard navigation updates, and monitoring evaluation hooks in transfer/card/internal-transaction write paths
 
 [2026-03-14 18:45] codex - Added a standalone user-role directory migration, SQL seed, Supabase seed script, and role query examples; live execution blocked pending SUPABASE_SERVICE_ROLE_KEY or direct Postgres credentials
+
+[2026-03-14 19:10] codex - Traced browser asset 404s to stale/corrupt Next.js dev build output and duplicate dev servers; added scripts/dev-clean.ps1 and a dev:clean command to reset .next before restarting dev
+
+[2026-03-14 19:25] codex - Fixed corrupted admin dashboard source in lib/admin/service.ts that broke the /dashboard route chunk; validated with pnpm typecheck and pnpm lint

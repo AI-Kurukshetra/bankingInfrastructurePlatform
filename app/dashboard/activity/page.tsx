@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { ActivitySquare } from "lucide-react";
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
+import { getCurrentUserProfile } from "@/lib/auth/rbac";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export default async function ActivityPage() {
@@ -11,6 +12,8 @@ export default async function ActivityPage() {
   } = await supabase.auth.getUser();
 
   if (!user) redirect("/login");
+
+  const profile = await getCurrentUserProfile();
 
   async function signOut() {
     "use server";
@@ -31,9 +34,10 @@ export default async function ActivityPage() {
           Activity Log
         </span>
       }
-      description="Audit trail of all platform events — payments, KYC decisions, card actions, auth events, and system changes."
+      description="Audit trail for platform events across payments, KYC decisions, card actions, auth events, and system changes."
     >
       <ActivityFeed />
     </DashboardShell>
   );
 }
+

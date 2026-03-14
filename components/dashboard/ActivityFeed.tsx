@@ -1,5 +1,6 @@
 "use client";
 
+import type { ElementType } from "react";
 import { useState } from "react";
 import {
   ActivitySquare,
@@ -18,9 +19,10 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 type EventCategory = "all" | "payments" | "accounts" | "cards" | "kyc" | "auth" | "system";
+type EventStatus = "success" | "failed" | "pending" | "warning";
 
 type ActivityEvent = {
   id: string;
@@ -30,195 +32,211 @@ type ActivityEvent = {
   detail: string;
   actor: string;
   actorInitials: string;
-  status: "success" | "failed" | "pending" | "warning";
+  status: EventStatus;
   timestamp: string;
   meta?: string;
 };
 
+type StreamHealth = {
+  label: string;
+  value: string;
+  detail: string;
+  tone: "neutral" | "positive" | "warning";
+};
+
 const events: ActivityEvent[] = [
   {
-    id: "EVT-0041",
+    id: "EVT-0048",
     category: "payments",
     type: "ACH Transfer",
-    title: "ACH transfer settled",
-    detail: "Atlas Ventures → Northline Retail for $18,450.00",
-    actor: "system",
-    actorInitials: "SY",
-    status: "success",
-    timestamp: "2 min ago",
-    meta: "TRX-8124"
-  },
-  {
-    id: "EVT-0040",
-    category: "kyc",
-    type: "KYC Decision",
-    title: "KYC application approved",
-    detail: "Consumer application for James Okafor passed all checks",
+    title: "Payroll batch released",
+    detail: "Atlas Ventures approved 26 outgoing ACH payouts totaling $148,920.00.",
     actor: "Rachel A.",
     actorInitials: "RA",
     status: "success",
-    timestamp: "8 min ago",
-    meta: "APP-7721"
+    timestamp: "1 min ago",
+    meta: "TRX-8198"
   },
   {
-    id: "EVT-0039",
+    id: "EVT-0047",
+    category: "system",
+    type: "Webhook",
+    title: "Provider webhook replayed",
+    detail: "The reconciliation worker replayed 4 delayed payment webhooks after a timeout window.",
+    actor: "system",
+    actorInitials: "SY",
+    status: "warning",
+    timestamp: "4 min ago",
+    meta: "WHK-0448"
+  },
+  {
+    id: "EVT-0046",
+    category: "cards",
+    type: "Card Controls",
+    title: "High-risk MCC block enabled",
+    detail: "Northline Retail travel card now blocks gambling, wire transfer, and cash-like merchants.",
+    actor: "Marcus K.",
+    actorInitials: "MK",
+    status: "success",
+    timestamp: "7 min ago",
+    meta: "CRD-5604"
+  },
+  {
+    id: "EVT-0045",
+    category: "accounts",
+    type: "Account Review",
+    title: "Treasury account moved to manual review",
+    detail: "Horizon Ops reserve account exceeded its configured same-day transfer threshold.",
+    actor: "system",
+    actorInitials: "SY",
+    status: "warning",
+    timestamp: "11 min ago",
+    meta: "ACC-3322"
+  },
+  {
+    id: "EVT-0044",
+    category: "kyc",
+    type: "KYB Decision",
+    title: "Business onboarding approved",
+    detail: "Meridian Holdings passed document verification and beneficial owner screening.",
+    actor: "Anaya P.",
+    actorInitials: "AP",
+    status: "success",
+    timestamp: "16 min ago",
+    meta: "APP-7733"
+  },
+  {
+    id: "EVT-0043",
+    category: "auth",
+    type: "MFA Challenge",
+    title: "Operator sign-in challenged",
+    detail: "A new browser session for analyst@acme.bank required WebAuthn confirmation.",
+    actor: "security@acme.bank",
+    actorInitials: "SE",
+    status: "pending",
+    timestamp: "19 min ago",
+    meta: "AUTH-0887"
+  },
+  {
+    id: "EVT-0042",
+    category: "payments",
+    type: "Return",
+    title: "ACH transfer returned",
+    detail: "Nova Biolabs outbound payment returned with R02 - account closed.",
+    actor: "system",
+    actorInitials: "SY",
+    status: "failed",
+    timestamp: "24 min ago",
+    meta: "TRX-8190"
+  },
+  {
+    id: "EVT-0041",
     category: "cards",
     type: "Card Issued",
     title: "Virtual card issued",
-    detail: "Visa Debit •••• 4821 linked to Northline Operating account",
+    detail: "Visa debit ending 4821 was issued to the Northline operating account.",
     actor: "Marcus K.",
     actorInitials: "MK",
     status: "success",
-    timestamp: "14 min ago",
+    timestamp: "31 min ago",
     meta: "CRD-5591"
   },
   {
-    id: "EVT-0038",
-    category: "payments",
-    type: "ACH Transfer",
-    title: "ACH transfer returned",
-    detail: "Nova Biolabs → External •••• 9201 returned — R02 Account closed",
-    actor: "system",
-    actorInitials: "SY",
-    status: "failed",
-    timestamp: "21 min ago",
-    meta: "TRX-8119"
-  },
-  {
-    id: "EVT-0037",
-    category: "accounts",
-    type: "Account Frozen",
-    title: "Account frozen by compliance",
-    detail: "Horizon Ops checking account frozen pending investigation",
-    actor: "Admin",
-    actorInitials: "AD",
-    status: "warning",
-    timestamp: "35 min ago",
-    meta: "ACC-3312"
-  },
-  {
-    id: "EVT-0036",
-    category: "kyc",
-    type: "Sanctions Hit",
-    title: "OFAC watchlist match detected",
-    detail: "Business application for Meridian Holdings flagged for review",
-    actor: "system",
-    actorInitials: "SY",
-    status: "warning",
-    timestamp: "42 min ago",
-    meta: "APP-7718"
-  },
-  {
-    id: "EVT-0035",
+    id: "EVT-0040",
     category: "auth",
-    type: "Login",
-    title: "Admin login from new device",
-    detail: "Successful login from Chrome on Windows — IP 92.168.1.44",
+    type: "Role Update",
+    title: "Operations analyst role granted",
+    detail: "Priya Nair received the payments_operator role for internal transfer approval flows.",
     actor: "admin@acme.bank",
     actorInitials: "AD",
     status: "success",
-    timestamp: "1 hr ago",
-    meta: "AUTH-0882"
+    timestamp: "38 min ago",
+    meta: "RBAC-0104"
   },
   {
-    id: "EVT-0034",
+    id: "EVT-0039",
+    category: "system",
+    type: "Migration",
+    title: "Payments module schema applied",
+    detail: "The payments_and_transfers_module migration completed successfully in staging.",
+    actor: "CI/CD",
+    actorInitials: "CD",
+    status: "success",
+    timestamp: "52 min ago",
+    meta: "MIG-0015"
+  },
+  {
+    id: "EVT-0038",
     category: "accounts",
-    type: "Account Opened",
-    title: "New business account provisioned",
-    detail: "Checking account opened for Nova Biolabs Inc. via onboarding",
-    actor: "system",
-    actorInitials: "SY",
+    type: "Limit Update",
+    title: "ACH daily limit increased",
+    detail: "Atlas Ventures daily outgoing ACH capacity increased from $50K to $100K.",
+    actor: "Rachel A.",
+    actorInitials: "RA",
     status: "success",
     timestamp: "1 hr ago",
-    meta: "ACC-3318"
+    meta: "ACC-3290"
   },
   {
-    id: "EVT-0033",
+    id: "EVT-0037",
+    category: "kyc",
+    type: "Watchlist Match",
+    title: "Manual review requested",
+    detail: "A director on the Meridian Holdings file matched a sanctions-adjacent name variant.",
+    actor: "system",
+    actorInitials: "SY",
+    status: "warning",
+    timestamp: "1 hr ago",
+    meta: "APP-7729"
+  },
+  {
+    id: "EVT-0036",
     category: "payments",
     type: "Internal Transfer",
-    title: "Internal transfer settled instantly",
-    detail: "Operating → Reserve account $75,000.00 sweep",
+    title: "Intraday sweep completed",
+    detail: "Operating account moved $75,000.00 into the reserve buffer for settlement coverage.",
     actor: "Marcus K.",
     actorInitials: "MK",
     status: "success",
     timestamp: "2 hr ago",
-    meta: "TRX-8101"
+    meta: "TRX-8171"
   },
   {
-    id: "EVT-0032",
-    category: "kyc",
-    type: "KYC Submitted",
-    title: "New KYC application submitted",
-    detail: "Consumer onboarding for Priya Nair — identity documents uploaded",
-    actor: "customer",
-    actorInitials: "PN",
-    status: "pending",
-    timestamp: "2 hr ago",
-    meta: "APP-7715"
-  },
-  {
-    id: "EVT-0031",
-    category: "cards",
-    type: "Card Frozen",
-    title: "Card frozen by customer request",
-    detail: "Visa Debit •••• 3302 frozen — reported lost by cardholder",
-    actor: "support@acme.bank",
-    actorInitials: "SP",
+    id: "EVT-0035",
+    category: "system",
+    type: "Alert Queue",
+    title: "Fraud queue backlog detected",
+    detail: "Three suspicious card-not-present alerts remain open beyond the 20 minute SLA.",
+    actor: "system",
+    actorInitials: "SY",
     status: "warning",
-    timestamp: "3 hr ago",
-    meta: "CRD-5580"
-  },
-  {
-    id: "EVT-0030",
-    category: "auth",
-    type: "Failed Login",
-    title: "Repeated failed login attempts",
-    detail: "5 consecutive failures for analyst@acme.bank — account locked",
-    actor: "system",
-    actorInitials: "SY",
-    status: "failed",
-    timestamp: "4 hr ago",
-    meta: "AUTH-0871"
-  },
-  {
-    id: "EVT-0029",
-    category: "system",
-    type: "Schema Migration",
-    title: "Database migration applied",
-    detail: "Migration 20260315 — payments_and_transfers_module applied successfully",
-    actor: "CI/CD",
-    actorInitials: "CD",
-    status: "success",
-    timestamp: "5 hr ago",
-    meta: "MIG-0015"
-  },
-  {
-    id: "EVT-0028",
-    category: "accounts",
-    type: "Limit Updated",
-    title: "Spending limit increased",
-    detail: "Daily ACH limit raised from $50K to $100K for Atlas Ventures",
-    actor: "Rachel A.",
-    actorInitials: "RA",
-    status: "success",
-    timestamp: "6 hr ago",
-    meta: "ACC-3290"
-  },
-  {
-    id: "EVT-0027",
-    category: "system",
-    type: "Webhook",
-    title: "Outbound webhook delivery failed",
-    detail: "POST https://hooks.partner.io/banking failed — 503 after 3 retries",
-    actor: "system",
-    actorInitials: "SY",
-    status: "failed",
-    timestamp: "7 hr ago",
-    meta: "WHK-0441"
+    timestamp: "2 hr ago",
+    meta: "MON-2091"
   }
 ];
 
-const categories: { label: string; value: EventCategory; icon: React.ElementType }[] = [
+const streamHealth: StreamHealth[] = [
+  {
+    label: "Ingestion health",
+    value: "99.94%",
+    detail: "Events replicated from payments, auth, and cards within the last 15 minutes.",
+    tone: "positive"
+  },
+  {
+    label: "Open follow-ups",
+    value: "7",
+    detail: "Case notes, returned transfers, and card control changes waiting for operator review.",
+    tone: "warning"
+  },
+  {
+    label: "Avg. event latency",
+    value: "42 sec",
+    detail: "Dummy telemetry for feed freshness across all enabled activity streams.",
+    tone: "neutral"
+  }
+];
+
+const categories: { label: string; value: EventCategory; icon: ElementType }[] = [
   { label: "All", value: "all", icon: ActivitySquare },
   { label: "Payments", value: "payments", icon: ArrowLeftRight },
   { label: "Accounts", value: "accounts", icon: Building2 },
@@ -230,17 +248,24 @@ const categories: { label: string; value: EventCategory; icon: React.ElementType
 
 function categoryIcon(category: ActivityEvent["category"]) {
   switch (category) {
-    case "payments": return ArrowLeftRight;
-    case "accounts": return Building2;
-    case "cards": return CreditCard;
-    case "kyc": return ShieldCheck;
-    case "auth": return UserCheck;
-    case "system": return RefreshCw;
-    default: return ActivitySquare;
+    case "payments":
+      return ArrowLeftRight;
+    case "accounts":
+      return Building2;
+    case "cards":
+      return CreditCard;
+    case "kyc":
+      return ShieldCheck;
+    case "auth":
+      return UserCheck;
+    case "system":
+      return RefreshCw;
+    default:
+      return ActivitySquare;
   }
 }
 
-function statusConfig(status: ActivityEvent["status"]) {
+function statusConfig(status: EventStatus) {
   switch (status) {
     case "success":
       return {
@@ -263,7 +288,7 @@ function statusConfig(status: ActivityEvent["status"]) {
     default:
       return {
         icon: UserPlus,
-        dot: "bg-blue-400",
+        dot: "bg-blue-500",
         badge: "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-900/30 dark:text-blue-400"
       };
   }
@@ -271,20 +296,21 @@ function statusConfig(status: ActivityEvent["status"]) {
 
 const summary = {
   total: events.length,
-  success: events.filter((e) => e.status === "success").length,
-  failed: events.filter((e) => e.status === "failed").length,
-  warning: events.filter((e) => e.status === "warning").length
+  success: events.filter((event) => event.status === "success").length,
+  failed: events.filter((event) => event.status === "failed").length,
+  warning: events.filter((event) => event.status === "warning").length
 };
 
 export function ActivityFeed() {
   const [activeCategory, setActiveCategory] = useState<EventCategory>("all");
 
   const filtered =
-    activeCategory === "all" ? events : events.filter((e) => e.category === activeCategory);
+    activeCategory === "all"
+      ? events
+      : events.filter((event) => event.category === activeCategory);
 
   return (
     <div className="space-y-5">
-      {/* Summary row */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {[
           {
@@ -325,7 +351,7 @@ export function ActivityFeed() {
             <Card key={stat.label} className="border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
               <CardContent className="flex items-center gap-3 p-4">
                 <div className={`rounded-xl p-2.5 ${stat.bg}`}>
-                  <Icon className={`h-4 w-4 ${stat.iconColor}`} />
+                  <Icon className={`h-4 w-4 ${stat.iconColor}`} aria-hidden="true" />
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 dark:text-slate-400">{stat.label}</p>
@@ -337,97 +363,108 @@ export function ActivityFeed() {
         })}
       </div>
 
-      {/* Feed card */}
+      <div className="grid gap-3 lg:grid-cols-3">
+        {streamHealth.map((item) => (
+          <Card key={item.label} className="border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+            <CardHeader className="pb-2">
+              <CardDescription>{item.label}</CardDescription>
+              <CardTitle
+                className={
+                  item.tone === "positive"
+                    ? "text-emerald-600 dark:text-emerald-400"
+                    : item.tone === "warning"
+                      ? "text-amber-600 dark:text-amber-400"
+                      : "text-slate-900 dark:text-slate-100"
+                }
+              >
+                {item.value}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-slate-500 dark:text-slate-400">{item.detail}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
       <Card className="border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
         <CardHeader className="flex flex-col gap-4 border-b border-slate-100 pb-4 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <CardTitle className="text-base">Audit & Event Log</CardTitle>
+            <CardTitle className="text-base">Audit and Event Log</CardTitle>
             <CardDescription className="mt-0.5">
-              Real-time activity across payments, accounts, cards, KYC, and system events.
+              Dummy activity across payments, accounts, cards, KYC, auth, and internal system events.
             </CardDescription>
           </div>
           <Button variant="outline" size="sm" className="gap-2 self-start sm:self-auto">
-            <Filter className="h-3.5 w-3.5" />
+            <Filter className="h-3.5 w-3.5" aria-hidden="true" />
             Export log
           </Button>
         </CardHeader>
 
-        {/* Category filter tabs */}
-        <div className="flex gap-1 overflow-x-auto border-b border-slate-100 px-4 pb-0 pt-3 dark:border-slate-800">
-          {categories.map((cat) => {
-            const Icon = cat.icon;
-            const isActive = activeCategory === cat.value;
+        <div className="flex gap-1 overflow-x-auto border-b border-slate-100 px-4 pt-3 dark:border-slate-800">
+          {categories.map((category) => {
+            const Icon = category.icon;
+            const isActive = activeCategory === category.value;
             return (
               <button
-                key={cat.value}
+                key={category.value}
                 type="button"
-                onClick={() => setActiveCategory(cat.value)}
+                onClick={() => setActiveCategory(category.value)}
                 className={`flex shrink-0 items-center gap-1.5 rounded-t-lg border-b-2 px-3 py-2 text-xs font-medium transition-colors ${
                   isActive
                     ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
                     : "border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
                 }`}
               >
-                <Icon className="h-3.5 w-3.5" />
-                {cat.label}
+                <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                {category.label}
               </button>
             );
           })}
         </div>
 
-        {/* Event list */}
         <CardContent className="p-0">
           <ul className="divide-y divide-slate-50 dark:divide-slate-800">
             {filtered.map((event) => {
-              const CatIcon = categoryIcon(event.category);
-              const sc = statusConfig(event.status);
+              const CategoryIcon = categoryIcon(event.category);
+              const config = statusConfig(event.status);
+              const StatusIcon = config.icon;
 
               return (
                 <li
                   key={event.id}
                   className="group flex items-start gap-4 px-5 py-4 transition-colors hover:bg-slate-50/70 dark:hover:bg-slate-800/40"
                 >
-                  {/* Left: status dot + category icon */}
                   <div className="relative mt-0.5 shrink-0">
-                    <div className="grid h-9 w-9 place-items-center rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
-                      <CatIcon className="h-4 w-4 text-slate-500 dark:text-slate-400" />
+                    <div className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
+                      <CategoryIcon className="h-4 w-4 text-slate-500 dark:text-slate-400" aria-hidden="true" />
                     </div>
-                    <span className={`absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full ring-2 ring-white dark:ring-slate-900 ${sc.dot}`} />
+                    <span className={`absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full ring-2 ring-white dark:ring-slate-900 ${config.dot}`} />
                   </div>
 
-                  {/* Middle: text */}
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-                        {event.title}
-                      </p>
-                      <Badge variant="outline" className={`text-[10px] ${sc.badge}`}>
-                        {event.status}
+                      <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{event.title}</p>
+                      <Badge variant="outline" className={`text-[10px] ${config.badge}`}>
+                        <span className="inline-flex items-center gap-1">
+                          <StatusIcon className="h-3 w-3" aria-hidden="true" />
+                          {event.status}
+                        </span>
                       </Badge>
                     </div>
-                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                      {event.detail}
-                    </p>
+                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{event.detail}</p>
                     <div className="mt-1.5 flex flex-wrap items-center gap-3 text-[11px] text-slate-400 dark:text-slate-500">
-                      <span className="font-mono">{event.meta}</span>
-                      <span>·</span>
+                      {event.meta && <span className="font-mono">{event.meta}</span>}
                       <span>{event.type}</span>
-                      <span>·</span>
                       <span>
-                        by{" "}
-                        <span className="font-medium text-slate-600 dark:text-slate-300">
-                          {event.actor}
-                        </span>
+                        by <span className="font-medium text-slate-600 dark:text-slate-300">{event.actor}</span>
                       </span>
                     </div>
                   </div>
 
-                  {/* Right: time + actor avatar */}
                   <div className="flex shrink-0 flex-col items-end gap-2">
-                    <span className="text-[11px] text-slate-400 dark:text-slate-500">
-                      {event.timestamp}
-                    </span>
-                    <div className="grid h-6 w-6 place-items-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-[9px] font-bold text-white">
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500">{event.timestamp}</span>
+                    <div className="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-[9px] font-bold text-white">
                       {event.actorInitials}
                     </div>
                   </div>
@@ -438,16 +475,14 @@ export function ActivityFeed() {
 
           {filtered.length === 0 && (
             <div className="py-16 text-center">
-              <ActivitySquare className="mx-auto h-8 w-8 text-slate-300 dark:text-slate-700" />
-              <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-                No events in this category.
-              </p>
+              <ActivitySquare className="mx-auto h-8 w-8 text-slate-300 dark:text-slate-700" aria-hidden="true" />
+              <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">No events in this category.</p>
             </div>
           )}
 
           <div className="flex items-center justify-between border-t border-slate-100 px-5 py-3 dark:border-slate-800">
             <p className="text-xs text-slate-400 dark:text-slate-500">
-              Showing {filtered.length} of {events.length} events · Last 24 hours
+              Showing {filtered.length} of {events.length} events from the last 24 hours.
             </p>
             <Button variant="ghost" size="sm" className="text-xs text-blue-600 dark:text-blue-400">
               Load older events

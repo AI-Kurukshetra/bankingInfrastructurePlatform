@@ -144,3 +144,13 @@ Add-Content -Path 'doc/DECISIONS.md' -Value @"
 - Added `scripts/seed-user-roles.mjs` and wired `pnpm db:seed:user-roles` for seeding the new tables through the Supabase service-role client
 - Added `supabase/examples/user_role_queries.sql` with example role-based lookup queries
 - Updated README and doc/SCHEMA.md with the new seed command and schema extension
+
+## 2026-03-14 19:10
+- Investigated browser console 404s for `layout.css`, `main-app.js`, and other Next dev assets
+- Confirmed the failures were caused by stale/corrupt `.next` output and overlapping Next dev processes, not an application route bug
+- Added `scripts/dev-clean.ps1` and wired `pnpm dev:clean` to clear `.next` before the next dev restart
+
+## 2026-03-14 19:25
+- Fixed malformed `lib/admin/service.ts` code in the admin dashboard review-detail branches that was breaking the `/dashboard` route bundle
+- Repaired the card issuance account extraction logic and rebuilt the payment/card timeline mapping with valid `AdminTimelineEvent` typing
+- Validated the dashboard codepath with `pnpm typecheck` and `pnpm lint`

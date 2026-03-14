@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { ClipboardCheck } from "lucide-react";
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { UserOnboardingWorkspace } from "@/components/onboarding/UserOnboardingWorkspace";
+import { getCurrentUserProfile } from "@/lib/auth/rbac";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export default async function OnboardingPage() {
@@ -9,6 +10,8 @@ export default async function OnboardingPage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) redirect("/login");
+
+  const profile = await getCurrentUserProfile();
 
   async function signOut() {
     "use server";
@@ -35,3 +38,4 @@ export default async function OnboardingPage() {
     </DashboardShell>
   );
 }
+

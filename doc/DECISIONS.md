@@ -80,3 +80,11 @@
   Rationale: the user explicitly requested a standalone `users` table with custom role/status constraints, and isolating it avoids breaking the existing auth-backed schema.
 - Added a dedicated Supabase seeding script for the new role tables instead of folding them into the existing MVP seed immediately.
   Rationale: the existing seed provisions auth users and operational banking data, while the new directory is a separate schema track that should remain runnable independently.
+
+## 2026-03-14 19:10
+- Treat transient Next asset 404s in local development as build-state corruption first, not as route-level application bugs.
+  Rationale: the failing requests mapped to generated `.next` artifacts, and logs showed missing internal chunk modules (`./65.js`) from stale dev output.
+
+## 2026-03-14 19:25
+- Treat `/dashboard` chunk-load failures as route-compilation failures when they correlate with type errors or malformed source in imported admin services.
+  Rationale: the visible browser error was a missing `app/dashboard/page.js` chunk, but the actual defect was invalid TypeScript in `lib/admin/service.ts` inside the dashboard import graph.
