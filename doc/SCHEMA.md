@@ -6,8 +6,11 @@
 |------|-------------|
 | `20260314124500_initial_auth_and_core.sql` | Core tables, enums, RLS, auth trigger |
 | `20260314210000_extended_schema.sql` | Onboarding, transactions, webhooks, API keys, documents, audit log enhancements |
+| `20260314230000_kyc_kyb_verification.sql` | Verification checks, retry-safe KYC/KYB state, sanctions results, and analyst review metadata |
+| `20260315000000_account_management_module.sql` | Account provisioning requests, lifecycle events, and balance snapshots |
 | `20260315010000_payments_and_transfers_module.sql` | ACH/internal transfer rails, reconciliation events, idempotency, and return/failure status support |
 | `20260315020000_cards_module.sql` | Virtual card issuance requests, lifecycle events, control metadata, and card transaction feed persistence |
+| `20260315030000_transaction_monitoring.sql` | Monitoring rules, alert enrichment, case workflow state, case notes, and case timeline events |
 
 ---
 
@@ -569,6 +572,21 @@ Key fields:
 - Monitoring rules are visible to staff and manageable by admin/developer roles.
 - Case notes and case events are visible to analyst/admin/developer roles only.
 - Alert and case base-table policies remain staff-only with assignee access preserved on cases.
+
+---
+
+## Admin Dashboard Operational Views
+
+No additional migration was required for the admin dashboard module.
+
+The admin APIs aggregate existing operational data from:
+- `onboarding_applications` and `verification_checks`
+- `transfers`, `transfer_events`, and `transactions`
+- `cards`, `card_issuance_requests`, `card_lifecycle_events`, and `card_transaction_feed`
+- `alerts`, `cases`, `case_events`, and `case_notes`
+- `webhook_events` and `audit_logs`
+
+Support notes for admin review workflows are persisted as structured `audit_logs` entries with action `support_note.created`.
 
 ## User Role Directory Extension (20260315040000_user_roles_rbac.sql)
 

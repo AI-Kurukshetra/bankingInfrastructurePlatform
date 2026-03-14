@@ -16,7 +16,7 @@ export default async function AccountsPage() {
 
   if (!user) redirect("/login");
 
-  // Profile is optional — falls back gracefully if profiles table isn't set up yet
+  // Profile is optional â€” falls back gracefully if profiles table isn't set up yet
   const profile = await getCurrentUserProfile();
   const role = profile?.role ?? "customer";
 
@@ -55,4 +55,5 @@ export default async function AccountsPage() {
     </DashboardShell>
   );
 }
+
 

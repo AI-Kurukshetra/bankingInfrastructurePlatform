@@ -467,7 +467,7 @@ export async function getAdminReviewDetail(kind: "onboarding" | "payment" | "car
       kind,
       id,
       title: `${cardResult.data.nickname ?? cardResult.data.network ?? "Card"} review`,
-      subtitle: `•••• ${cardResult.data.last4 as string}`,
+      subtitle: `â€¢â€¢â€¢â€¢ ${cardResult.data.last4 as string}`,
       status: cardResult.data.status as string,
       badges: [cardResult.data.status as string, (cardResult.data.network as string) ?? "card"],
       summary: [
@@ -535,5 +535,6 @@ export async function exportAdminReport(kind: "overview" | "audit" = "overview",
     body
   };
 }
+
 
 

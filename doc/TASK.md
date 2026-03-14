@@ -94,12 +94,12 @@
 - [x] Integration: Trigger monitoring evaluation from webhook events and internal transaction writes
 
 ### 11. Admin Dashboard
-- [ ] Backend: Build admin aggregation endpoints for onboarding, payments, cards, alerts, cases, and webhook health
-- [ ] Backend: Add export endpoints for demo-ready reports and audit review data
-- [ ] Frontend: Build internal dashboard shell with role-aware navigation and queue summary cards
-- [ ] Frontend: Build review screens for onboarding decisions, payment issues, card operations, and alert cases
-- [ ] Frontend: Add event timelines, actor history, and support notes for operational workflows
-- [ ] Frontend: Add confirmation prompts and success/error feedback for privileged actions
+- [x] Backend: Build admin aggregation endpoints for onboarding, payments, cards, alerts, cases, and webhook health
+- [x] Backend: Add export endpoints for demo-ready reports and audit review data
+- [x] Frontend: Build internal dashboard shell with role-aware navigation and queue summary cards
+- [x] Frontend: Build review screens for onboarding decisions, payment issues, card operations, and alert cases
+- [x] Frontend: Add event timelines, actor history, and support notes for operational workflows
+- [x] Frontend: Add confirmation prompts and success/error feedback for privileged actions
 
 ## Phase 5: Platform APIs, Events, And Communication
 
